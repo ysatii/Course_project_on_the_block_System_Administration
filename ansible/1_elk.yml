@@ -1,0 +1,57 @@
+---
+- name: Configure elasticsearch
+  tags: elasticsearch
+  hosts: elasticsearch
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: copy elasticsearch
+      copy:
+        src: packages/{{ pkg_elastic }}
+        dest: /tmp/
+
+    - name: Install elasticsearch deb
+      apt:
+        deb: "/tmp/{{ pkg_elastic }}"
+        state: present
+    
+    - name: Copy elasticsearch.yml
+      copy:
+        src: templates/elasticsearch.yml
+        mode: 0640
+        dest: /etc/elasticsearch/elasticsearch.yml
+
+    - name: restart elasticsearch
+      service:
+        name: elasticsearch
+        state: restarted
+        enabled: true
+
+- name: Configure kibana
+  tags: kibana
+  hosts: kibana
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: copy kibana
+      copy:
+        src: packages/{{ pkg_kibana }}
+        dest: /tmp/
+
+    - name: Install kibana deb
+      apt:
+        deb: "/tmp/{{ pkg_kibana }}"
+        state: present
+
+    - name: Copy kibana.yml
+      template:
+        src: templates/kibana.yml.j2
+        mode: 0640
+        dest: /etc/kibana/kibana.yml
+
+    - name: restart kibana
+      systemd:
+        name: kibana
+        state: restarted
+        enabled: true
+...

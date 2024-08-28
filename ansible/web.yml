@@ -1,0 +1,48 @@
+---
+- name: Configure web server
+  hosts: internal_servers
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Update cache
+      apt:
+        update_cache: yes
+
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Copy index.html
+      copy:
+        src: templates/index.html
+        dest: /var/www/html/
+    
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
+    
+    - name: copy filebeat
+      copy:
+        src: packages/{{ pkg_name }}
+        dest: /var/www/html/
+
+    
+    
+
+- name: Configure web server 2
+  hosts: webserver2.ru-central1.internal
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Copy index.html server2 
+      copy:
+        src: templates2/index.html
+        dest: /var/www/html/
+    
+    - name: copy filebeat
+      copy:
+        src: packages/{{ pkg_name }}
+        dest: /var/www/html/
+...
