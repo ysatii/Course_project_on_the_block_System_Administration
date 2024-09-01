@@ -1,0 +1,8 @@
+terraform.tfvars
+filebeat-8.10.3-amd64.deb
+elasticsearch-8.10.3-amd64.deb
+kibana-8.10.3-amd64.deb
+**/.terraform/*
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
