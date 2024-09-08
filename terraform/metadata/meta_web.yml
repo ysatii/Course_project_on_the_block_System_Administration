@@ -1,9 +1,8 @@
 #cloud-config
 users:
-  - name: testuser
+  - name: test
     groups: sudo
     shell: /bin/bash
     sudo: 'ALL=(ALL) NOPASSWD:ALL'
     ssh_authorized_keys:
-    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDDzPZZ8yigrzAftvzMiIFfYQ37uX5qO2tEU1r2m2WzjWMEJRPyokAm0phkofkfiLtnnL6DladBhGE1m7HAjXoRIxh6P2csmgO9zAxYrpwA5xAnaRO1f8afunsFmajGkBZ5GBKI4xkB+0GKdMa1A2XGgh8WwZLz6v+ZDoK18RNEdNk6uV8wWt6Dh2iRohbmul+rzKwKkQwN9/DRPlII8vuylzwHrar8uKWoLPWfCdGqURyNWs4b0NSZcPMroTHoPMPmwe8nvIdftpM+Tf9MxYBbVil/ycGr7F7fv4s+B9EpTkiMT55q/sxjb7O17AVmBgy7bRiuzcz6DzOm5b8zwIj6piMgKdXYSR2tHHCS26Dkp7w5ySID4QCJeo1/uzOzzy3POL6Tr7Jy3J7ytOEdDzgzLA7Nu1z2pSgIpWxiBS8Tu0XQ9PoSp3SDEx1AkAdVfZ9O8ZO/j1I/dJcsw+YyTRFx+bvM6+oFbLEYOSOQd4RlPnL86ahVN2l9jw62PwTYi6s= lamer@lamer-VirtualBox
-
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGJ/8nl4RWFm+0oXUDpUSjuOP3AHCl2E/af1CpzwhtO6 lamer@lamer-VirtualBox

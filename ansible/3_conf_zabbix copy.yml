@@ -1,0 +1,181 @@
+- name: Configure zabbix server
+  hosts: zabbix_server
+  gather_facts: no
+  become: yes
+  tasks:
+  #- name: Update cache
+  #  apt:
+  #    update_cache: yes
+
+  - name: Обновление системы и установка зависимостей
+    apt:
+      update_cache: yes
+      name: ['wget', 'curl', 'nginx', 'postgresql', 'postgresql-contrib', 'php-fpm', 'php-pgsql', 'php-bcmath', 'php-mbstring', 'php-gd', 'php-xml']
+      state: present
+  #- name: Install postgresql
+  #  apt:
+  #    name: postgresql
+  #    state: present
+
+  
+  #- name: Copy zabbix package
+  #  copy:
+  #    src: packages/{{ pkg_zabbix }}
+  #    dest: /tmp/
+
+  #- name: Install zabbix repository
+  #  command: dpkg -i /tmp/{{ pkg_zabbix }}
+
+  #- name: Установка Zabbix 6.0
+  #  apt:
+  #    name: "{{ item }}"
+  #    state: present
+  #    update_cache: yes
+  #  loop: ["zabbix-server-pgsql", "zabbix-frontend-php", "php8.1-pgsql", "zabbix-nginx-conf", "zabbix-sql-scripts", "zabbix-agent"]
+  
+  # Установка репозитория Zabbix
+  - name: Скачать и установить репозиторий Zabbix 6
+    shell: |
+      wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-4+ubuntu$(lsb_release -rs)_all.deb
+      dpkg -i zabbix-release_6.0-4+ubuntu$(lsb_release -rs)_all.deb
+      apt update
+
+  # Установка Zabbix Server, агент и веб-интерфейс
+  - name: Установить Zabbix Server и компоненты
+    apt:
+      name: ['zabbix-server-pgsql', 'zabbix-frontend-php', 'zabbix-nginx-conf', 'zabbix-agent']
+      state: present
+
+  - name: Create user and DB
+    shell:
+      cmd: |
+        su - postgres -c "psql --command \"CREATE USER {{ zabbix_user }} WITH PASSWORD '{{ zabbix_password }}';\"" && \
+        su - postgres -c "psql --command \"CREATE DATABASE zabbix OWNER {{ zabbix_user }};\""          
+        
+  # Импорт схемы базы данных Zabbix
+  - name: Импортировать начальную структуру базы данных
+    shell: |
+      sudo -u postgres zcat /usr/share/doc/zabbix-server-pgsql*/create.sql.gz  | sudo -u {{ zabbix_user }} -p {{ zabbix_password }} psql zabbix
+  
+
+  # Настройка Zabbix Server
+  - name: Настройка Zabbix Server для использования PostgreSQL
+    lineinfile:
+       dest: /etc/zabbix/zabbix_server.conf
+       regexp: '^#?DBPassword='
+       line: 'DBPassword={{ zabbix_password }}'
+
+   # Настройка PHP для Zabbix
+  - name: Настроить PHP для Zabbix
+    blockinfile:
+       path: /etc/php/7.4/fpm/php.ini
+       block: |
+         post_max_size = 16M
+         upload_max_filesize = 2M
+         max_execution_time = 300
+         max_input_time = 300
+         memory_limit = 128M
+         date.timezone = Europe/Moscow
+
+  # Настройка Nginx для Zabbix
+  - name: Настроить Nginx для Zabbix
+    blockinfile:
+      path: /etc/nginx/conf.d/zabbix.conf
+      block: |
+          server {
+              listen 80;
+              server_name your_server_name;
+
+              root /usr/share/zabbix;
+
+              index index.php index.html index.htm;
+
+              location / {
+                  try_files $uri $uri/ =404;
+              }
+
+              location ~ \.php$ {
+                  fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+                  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                  include fastcgi_params;
+              }
+
+              location ~ /\.ht {
+                  deny all;
+              }
+          }
+
+  # Перезапуск сервисов Zabbix и Nginx
+  - name: Перезапустить сервисы Zabbix и Nginx
+    systemd:
+        name: "{{ item }}"
+        state: restarted
+    with_items:
+        - zabbix-server
+        - zabbix-agent
+        - nginx
+
+  #- name: Copy zabbix_server.conf
+  #  template:
+  #    src: templates/zabbix_server.conf.j2
+  #    mode: 0644
+  #    dest: /etc/zabbix/zabbix_server.conf
+
+  #- name: Copy nginx.conf
+  #  template:
+  #    src: templates/nginx.conf.j2
+  #    mode: 0644
+  #    dest: /etc/zabbix/nginx.conf
+
+  #- name: Restart services
+  #  systemd:
+  #    name: "{{ item }}"
+  #    state: restarted
+  #    enabled: true
+  #  loop: ["zabbix-server", "zabbix-agent", "nginx", "php8.1-fpm"]
+
+
+
+
+
+
+
+
+
+
+- name: Configure zabbix agent
+  hosts: internal_servers
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Copy zabbix package
+      copy:
+        src: packages/{{ pkg_zabbix }}
+        dest: /tmp/
+
+    - name: Install zabbix repository
+      command: dpkg -i /tmp/{{ pkg_zabbix }}
+
+    - name: Install zabbix-agent
+      apt:
+        name: zabbix-agent
+        state: present
+        update_cache: yes
+
+    - name: Add server IP
+      replace:
+        path: /etc/zabbix/zabbix_agentd.conf
+        regexp: 'Server=127.0.0.1'
+        replace: 'Server={{ zabbix_server }}'
+
+    - name: Add server IP
+      replace:
+        path: /etc/zabbix/zabbix_agentd.conf
+        regexp: 'ServerActive=127.0.0.1'
+        replace: 'ServerActive={{ zabbix_server }}'
+
+    - name: Restart zabbix agent
+      systemd:
+        name: zabbix-agent
+        state: restarted
+        enabled: true   

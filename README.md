@@ -82,3 +82,4 @@ ansible-playbook web.yml
 - веб страница index.html и index.html  на webserver2
 - 
 
+sh -o ProxyCommand="ssh -i /home/lamer/.ssh/test -W %h:%p test@89.169.152.12" test@zabbix-server.ru-central1.internal  
