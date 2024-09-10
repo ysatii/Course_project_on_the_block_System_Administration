@@ -1,5 +1,5 @@
 - name: Configure zabbix agent
-  hosts: all-servers
+  hosts: {{ bastion_host }}
   gather_facts: no
   become: yes
   tasks:

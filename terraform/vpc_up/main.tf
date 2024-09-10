@@ -80,7 +80,7 @@ resource "yandex_compute_instance" "bastion" {
 
   network_interface {    
     subnet_id          =  yandex_vpc_subnet.external.id  
-    security_group_ids = [ yandex_vpc_security_group.bastion-sg.id, yandex_vpc_security_group.sg-internet.id ]  
+    security_group_ids = [ yandex_vpc_security_group.bastion-sg.id, yandex_vpc_security_group.sg-internet.id, yandex_vpc_security_group.zabbix-sg.id ]  
     nat                = true  
   }
   
