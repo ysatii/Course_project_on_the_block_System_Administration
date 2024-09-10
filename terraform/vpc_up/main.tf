@@ -187,7 +187,7 @@ resource "yandex_compute_instance" "zabbix-server" {
 
   boot_disk {
     initialize_params {
-      image_id = "fd8s4a9mnca2bmgol2r8"
+      image_id = "fd8s4a9mnca2bmgol2r8" # image_id = "fd8rpsoinvpbjub1fn9g"   # 
       size     = 20
       type     = "network-hdd"
     }
@@ -441,6 +441,14 @@ resource "yandex_vpc_security_group" "elastic-sg" {
     v4_cidr_blocks = ["0.0.0.0/0"]  
     port           = 9200
   }
+  
+   ingress {
+    protocol       = "TCP"    
+    security_group_id = yandex_vpc_security_group.zabbix-sg.id   
+    from_port         = 10050
+    to_port           = 10051
+  }
+
 
   ingress {
     protocol          = "TCP"      
@@ -465,6 +473,14 @@ resource "yandex_vpc_security_group" "kibana-sg" {
     security_group_id = yandex_vpc_security_group.bastion-sg.id   
     port              = 22
   }    
+
+  ingress {
+    protocol       = "TCP"    
+    security_group_id = yandex_vpc_security_group.zabbix-sg.id   
+    from_port         = 10050
+    to_port           = 10051
+  }
+  
 }
 
 #security_group for zabbix
