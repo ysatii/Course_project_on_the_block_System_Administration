@@ -98,3 +98,6 @@ resource "yandex_alb_load_balancer" "lb1" {
 ```
 </details>
 
+## Схема балансировки
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1.jpg)
+
