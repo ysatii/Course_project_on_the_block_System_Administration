@@ -83,3 +83,16 @@ ansible-playbook web.yml
 - 
 
 ssh -o ProxyCommand="ssh -i /home/lamer/.ssh/test -W %h:%p test@89.169.152.12" test@zabbix-server.ru-central1.internal  
+
+
+Отчет по работе 
+
+* [Сайт](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Sait.md)
+* Мониторинг
+* Логи
+* Сеть
+* Резервное копирование
+* Дополнительно
+
+
+ 
