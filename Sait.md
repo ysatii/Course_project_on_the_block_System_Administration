@@ -1,5 +1,6 @@
 # Курсовой проект по блоку "Системное администрирование"
 
+[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
 ## Сайт 
 
 
@@ -136,10 +137,14 @@ resource "yandex_alb_load_balancer" "lb1" {
 ## Схема балансировки
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1.jpg)
 
+Запустим Ansible скрипт 
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_3.jpg)
+
 Протестируем сайт 
+Получили ответы с обеих веб серверов   
 
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_1.jpg)
 
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_2.jpg)
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_3.jpg)
+
