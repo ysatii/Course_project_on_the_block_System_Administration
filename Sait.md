@@ -2,8 +2,43 @@
 
 ## Сайт 
 
-## Код для создания  Target Group, Backend Group, HTTP router, Application load balancer
 
+
+# Создадим два веб сервера
+<details>
+<summary>Нажмите сдесь что бы раскрыть блок</summary>
+
+```
+resource "yandex_compute_instance" "webserver" {
+  count       = 2
+  name        = "webserver${count.index + 1}"
+  hostname    = "webserver${count.index + 1}"
+  platform_id = "standard-v3"
+  zone        = "ru-central1-${count.index == 0? "a" : "b"}"
+
+  resources {
+    cores         = 2
+    memory        = 2
+    core_fraction = 20
+  }
+  
+  scheduling_policy {
+    preemptible = true
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id = "fd8s4a9mnca2bmgol2r8"
+      size     = 10
+      type     = "network-hdd"
+    }
+  }
+
+```
+</details>
+
+
+## Код для создания  Target Group, Backend Group, HTTP router, Application load balancer
 <details>
 <summary>Нажмите сдесь что бы раскрыть блок</summary>
 
@@ -101,3 +136,10 @@ resource "yandex_alb_load_balancer" "lb1" {
 ## Схема балансировки
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1.jpg)
 
+Протестируем сайт 
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait2.jpg)
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait3.jpg)
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait4.jpg)
