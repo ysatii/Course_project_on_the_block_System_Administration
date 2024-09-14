@@ -137,7 +137,7 @@ resource "yandex_alb_load_balancer" "lb1" {
 </details>
 
 ## Схема балансировки
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1.jpg)
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1.jpg)  
 
 
 ### Код Ansible
@@ -195,11 +195,10 @@ resource "yandex_alb_load_balancer" "lb1" {
 
 ```
 </details>
-
+  
 
 ## Код Ansible для установки nginx и копирования index.html на оба web вебсервера
-На каждый сервер загружаем свою версию файла, что бы понять работае ли  балансировка!
-
+На каждый сервер загружаем свою версию файла, что бы понять работае ли  балансировка! Сделано в учебных целях.! 
 
 ### Запустим Ansible скрипт 
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_3.jpg)
