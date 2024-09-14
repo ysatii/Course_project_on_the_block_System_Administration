@@ -39,8 +39,9 @@ resource "yandex_compute_instance" "webserver" {
 ```
 </details>
 
+## Создадим  Target Group, Backend Group, HTTP router, Application load balancer
 
-## Код для создания  Target Group, Backend Group, HTTP router, Application load balancer
+### Код terraform
 <details>
 <summary>Нажмите сдесь что бы раскрыть блок</summary>
 
