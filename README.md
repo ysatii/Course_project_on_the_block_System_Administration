@@ -89,7 +89,7 @@ ssh -o ProxyCommand="ssh -i /home/lamer/.ssh/test -W %h:%p test@89.169.152.12" t
 
 * [Сайт](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Sait.md)
 * [Мониторинг](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Monitoring.md)
-* Логи
+* [Логи](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Logs.md)
 * Сеть
 * Резервное копирование
 * Дополнительно
