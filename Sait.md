@@ -5,7 +5,7 @@
 
 
 
-## Создадим два веб сервера
+### Создадим два веб сервера
 ### Код для создания веб серверов
 <details>
 <summary>Нажмите сдесь что бы раскрыть блок</summary>
@@ -39,7 +39,7 @@ resource "yandex_compute_instance" "webserver" {
 ```
 </details>
 
-## Создадим  Target Group, Backend Group, HTTP router, Application load balancer
+### Создадим  Target Group, Backend Group, HTTP router, Application load balancer
 
 ### Код terraform
 <details>
@@ -136,7 +136,7 @@ resource "yandex_alb_load_balancer" "lb1" {
 ```
 </details>
 
-## Схема балансировки
+### Схема балансировки
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1.jpg)  
 
 
@@ -197,7 +197,7 @@ resource "yandex_alb_load_balancer" "lb1" {
 </details>
   
 
-## Код Ansible для установки nginx и копирования index.html на оба web вебсервера
+### Код Ansible для установки nginx и копирования index.html на оба web вебсервера
 На каждый сервер загружаем свою версию файла, что бы понять работае ли  балансировка! Сделано в учебных целях.! 
 
 ### Запустим Ansible скрипт 
@@ -206,7 +206,7 @@ resource "yandex_alb_load_balancer" "lb1" {
 
 
 
-## Протестируем сайт 
+### Протестируем сайт 
 Получили ответы с обеих веб серверов   
 
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_1.jpg)
