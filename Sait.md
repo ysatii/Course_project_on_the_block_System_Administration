@@ -5,7 +5,7 @@
 
 
 
-# Создадим два веб сервера
+## Создадим два веб сервера
 <details>
 <summary>Нажмите сдесь что бы раскрыть блок</summary>
 
@@ -137,10 +137,77 @@ resource "yandex_alb_load_balancer" "lb1" {
 ## Схема балансировки
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1.jpg)
 
+
+
+<details>
+<summary>Нажмите сдесь что бы раскрыть блок</summary>
+
+```
+  name: Configure web server
+  hosts: internal_servers
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Update cache
+      apt:
+        update_cache: yes
+
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Copy index.html
+      copy:
+        src: templates/index.html
+        dest: /var/www/html/
+    
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
+    
+    - name: copy filebeat
+      copy:
+        src: packages/{{ pkg_name }}
+        dest: /var/www/html/
+
+    
+    
+
+- name: Configure web server 2
+  hosts: webserver2.ru-central1.internal
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Copy index.html server2 
+      copy:
+        src: templates2/index.html
+        dest: /var/www/html/
+    
+    - name: copy filebeat
+      copy:
+        src: packages/{{ pkg_name }}
+        dest: /var/www/html/
+
+
+```
+</details>
+
+
+## Код Ansible для установки nginx и копирования index.html на оба web вебсервера
+На каждый сервер загружаем свою версию файла, что бы понять работае ли  балансировка!
+<details>
+<summary>Нажмите сдесь что бы раскрыть блок</summary>
+</details>
+
 Запустим Ansible скрипт 
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_3.jpg)
 
-Протестируем сайт 
+
+
+
+## Протестируем сайт 
 Получили ответы с обеих веб серверов   
 
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_1.jpg)
