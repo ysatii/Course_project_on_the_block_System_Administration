@@ -84,7 +84,7 @@ resource "yandex_compute_snapshot_schedule" "snapshot-auto" {
 
 ```
 
-
+</details>
 
 
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/backup1.jpg)  
@@ -99,8 +99,6 @@ resource "yandex_compute_snapshot_schedule" "snapshot-auto" {
 
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/backup1_5.jpg)  
 
-
-</details>
 
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
 
