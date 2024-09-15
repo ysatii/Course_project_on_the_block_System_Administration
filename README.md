@@ -31,7 +31,7 @@ ssh -o ProxyCommand="ssh -i /home/lamer/.ssh/test -W %h:%p test@89.169.152.12" t
 
 
 ## Анализ работы
-[Анализ](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Analysis.md)
+* [Анализ](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Analysis.md)
 
 ## Отчет по работе 
 
