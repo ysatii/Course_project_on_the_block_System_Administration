@@ -9,7 +9,7 @@
 
 ## Этап 1. Terraform. 
 1.	Необходимо создать  6 виртуальных машин и один load balansir
-- web1 
+- web 1 
 - web 2
 - elasticsearch
 - zabbix
