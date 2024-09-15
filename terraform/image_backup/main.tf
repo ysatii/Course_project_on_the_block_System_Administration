@@ -76,7 +76,7 @@ resource "yandex_compute_snapshot_schedule" "snapshot-auto" {
   name = "snapshot-auto"
 
   schedule_policy {
-	expression = "18 20 ? * *" # time in UTC±0:00
+	expression = "13 08 ? * *" # time in UTC±0:00
   }
 
    snapshot_spec {

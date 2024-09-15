@@ -59,7 +59,7 @@ resource "yandex_compute_snapshot_schedule" "snapshot-auto" {
   name = "snapshot-auto"
 
   schedule_policy {
-	expression = "18 20 ? * *" # time in UTC±0:00
+	expression = "18 08 ? * *" # time in UTC±0:00
   }
 
    snapshot_spec {
@@ -83,6 +83,23 @@ resource "yandex_compute_snapshot_schedule" "snapshot-auto" {
 }
 
 ```
+
+
+
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/backup1.jpg)  
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/backup1_1.jpg)  
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/backup1_2.jpg)  
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/backup1_3.jpg)  
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/backup1_4.jpg)  
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/backup1_5.jpg)  
+
+
 </details>
 
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
