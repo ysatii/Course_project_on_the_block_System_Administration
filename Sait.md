@@ -214,7 +214,6 @@ resource "yandex_alb_load_balancer" "lb1" {
 Сервер2  
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_1.jpg)
 
-[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
 
 
 
@@ -248,3 +247,5 @@ resource "yandex_alb_load_balancer" "lb1" {
 ### Виртуальные машины
 * [Инфраструктура](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/infrastructure.md)
  
+
+ [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
