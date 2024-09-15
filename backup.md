@@ -4,8 +4,11 @@
 
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
 
+## Создадим снимки дисков виртуальных машин
 
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/backup1.jpg)  
 
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/backup1_1.jpg)  
  
 ### Код код terrafom создания снимков дисков 
 <details>
@@ -87,9 +90,7 @@ resource "yandex_compute_snapshot_schedule" "snapshot-auto" {
 </details>
 
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/backup1.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/backup1_1.jpg)  
 
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/backup1_2.jpg)  
 
