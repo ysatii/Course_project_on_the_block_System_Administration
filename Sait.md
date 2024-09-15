@@ -246,5 +246,5 @@ resource "yandex_alb_load_balancer" "lb1" {
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_12.jpg)
 
 ### Виртуальные машины
-* [Резервное копирование](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Backup.md)
+* [Инфраструктура](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/infrastructure.md)
  
