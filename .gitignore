@@ -1,6 +1,7 @@
 terraform.tfvars
 filebeat-8.10.3-amd64.deb
 elasticsearch-8.10.3-amd64.deb
+zabbix-release_6.0-4+ubuntu22.04_all.deb
 kibana-8.10.3-amd64.deb
 **/.terraform/*
 .terraform.lock.hcl
