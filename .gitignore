@@ -8,3 +8,4 @@ kibana-8.10.3-amd64.deb
 terraform.tfstate
 terraform.tfstate.backup
 ansible/files/*
+server.sql.gz
