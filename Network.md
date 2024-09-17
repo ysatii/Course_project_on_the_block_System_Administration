@@ -45,6 +45,26 @@ resource "yandex_vpc_subnet" "external" {
 ```
 </details>
 
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1.jpg)  
+
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1_1.jpg)  
+
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1_2.jpg)  
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1_3.jpg)  
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1_4.jpg)  
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1_5.jpg)  
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1_6.jpg) 
+
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1_7.jpg)  
+
+
 ## Создадим таблицу маршрутизации и группы безопастности
 ### Код  terrafom создания Таблица маршрутизации и группы безопастности 
 <details>
@@ -232,7 +252,4 @@ resource "yandex_vpc_security_group" "zabbix-sg" {
 </details>
 
 
-
-
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/backup1_2.jpg)  
 
