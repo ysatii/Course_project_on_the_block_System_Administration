@@ -7,3 +7,4 @@ kibana-8.10.3-amd64.deb
 .terraform.lock.hcl
 terraform.tfstate
 terraform.tfstate.backup
+ansible/files/*
