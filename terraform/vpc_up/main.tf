@@ -383,7 +383,7 @@ resource "yandex_vpc_security_group" "bastion-sg" {
    }  
 }
 
-#security_group for alb
+#security_group for alby
 resource "yandex_vpc_security_group" "alb-wb" {
   name        = "load-balansir"
   network_id  = yandex_vpc_network.bastionet.id
@@ -394,17 +394,17 @@ resource "yandex_vpc_security_group" "alb-wb" {
     port           = 80
    }
 
-   # ingress {
-   # protocol       = "TCP"   
-   #  v4_cidr_blocks = ["0.0.0.0/0"]    
-   # port           = 443
-   # }
+   ingress {
+     protocol       = "TCP"   
+     v4_cidr_blocks = ["0.0.0.0/0"]    
+     port           = 443
+   }
 
-   # ingress {
-   # protocol       = "TCP"   
-   # predefined_target = "loadbalancer_healthchecks"        
-   #  port           = 30080     
-   # }
+   ingress {
+     protocol       = "TCP"   
+     predefined_target = "loadbalancer_healthchecks"        
+     port           = 30080     
+   }
 }
 
 #security_group for web
