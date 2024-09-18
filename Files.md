@@ -6,14 +6,15 @@
 
 * ansible - Папка содержит скрипты для автоматической установки П.О., установочные пакеты, файлы настроект, HTML страницы проекта  
   * files/packages/  - Папка содержит пакеты *.deb для установки на сервера
+    * README.md - ссылка на установочные пакеты
   * group_vars - Групповые переменные ansible
   * templates - Папка содержит файлы настроек установленных пакетов
   * templates2 - Папка содержит Файл HTML для второго сервера если нужно проверить работу балансировщика явно!
-  * 1_elk.yml
-  * 2_web.yml
-  * 3_conf_zabbix_copy.yml
-  * 4_zabbix_copy_all.yml
-  * 5_zabbix_bastion.yml
+  * 1_elk.yml - скрпит дя установки стэка ELK
+  * 2_web.yml - Скрипт установливает скрпиты на WEB сервера
+  * 3_conf_zabbix_copy.yml - установка пакета zabbix на машину zabbix-server
+  * 4_zabbix_copy_all.yml - установка zabbix агента на все оставшиеся машины кроме машины bastion
+  * 5_zabbix_bastion.yml - установка zabbix агента на машину bastion 
   * ansible/ansible.cfg
   * ansible/inventory.ini
 * img - Папка содержит рисунки, смены, принт-скрины
@@ -34,7 +35,7 @@
 * Network.md - Файл содержит отчет о создания виртуалььной сети, таблиц маршрутизации, групп безопастности
 * README.md - основной файл отчета
 * Sait.md - Файл содержит отчет о работе балнсировщика и WEB-сервиса
-* test
-* test.pub
+* test - закрытый ключ ssh для виртуальных машин
+* test.pub - открытый ключ ssh для виртуальных машин
 
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
