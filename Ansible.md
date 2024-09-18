@@ -473,12 +473,11 @@
 </details>
 
 * [Файл инвентаризации](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/ansible/inventory.ini)
- Файл ansible/inventory.ini  
- Содержит необходимые настройки 
+ Файл ansible/inventory.ini  Содержит необходимые настройки 
 
-секция all:vars 
-bastion_host= указать адрес машины бастион
-zabbix_server_ip= указать адрес машины с забикс сервером
+секция all:vars  
+bastion_host= указать адрес машины бастион  
+zabbix_server_ip= указать адрес машины с забикс сервером  
 
-секция bastion
-51.250.70.234 - изменить на адрес машины бастион
+секция bastion  
+51.250.70.234 - изменить на адрес машины бастион  
