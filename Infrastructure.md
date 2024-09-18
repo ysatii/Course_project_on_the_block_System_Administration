@@ -10,10 +10,21 @@
 terraform init
 terraform apply -target=module.vpc_up --auto-approve
 ```
+-----------------------------------------------------------------
 
-image_backup
+
+из папки terraform
+```sh
+cd vpc_up
+terraform init  
+terraform apply --auto-approve
+```
+
+## Развертывание инфраструктуры:
+из папки terraform
 ```sh
 cd image_backup
+terraform init  
 terraform apply --auto-approve
 ```
 
