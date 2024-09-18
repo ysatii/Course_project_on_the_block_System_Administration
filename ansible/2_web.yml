@@ -27,7 +27,40 @@
       copy:
         src: packages/{{ pkg_name }}
         dest: /var/www/html/
+    
+    - name: Install filebeat deb
+      apt:
+        deb: "/tmp/{{ pkg_name }}"
+        state: present
 
+    - name: Configure nginx module
+      copy:
+        dest: /etc/filebeat/modules.d/nginx.yml.disabled
+        content: |
+          - module: nginx
+            # Access logs
+            access:
+              enabled: true
+
+            # Error logs
+            error:
+              enabled: true
+        mode: 0644
+     
+    - name: Enable system nginx module in filebeat
+      shell:
+        cmd:  filebeat setup --dashboards && filebeat modules enable system nginx
+        
+    - name: Reload systemd daemon
+      shell:
+        cmd: systemctl daemon-reload
+    
+    - name: restart Filebeat
+      systemd:
+        name: filebeat.service
+        state: restarted
+        enabled: true
+...
     
     
 
@@ -41,8 +74,5 @@
         src: templates2/index.html
         dest: /var/www/html/
     
-    - name: copy filebeat
-      copy:
-        src: packages/{{ pkg_name }}
-        dest: /var/www/html/
+
 ...
