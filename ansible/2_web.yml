@@ -26,12 +26,18 @@
     - name: copy filebeat
       copy:
         src: packages/{{ pkg_name }}
-        dest: /var/www/html/
+        dest: /tmp/
     
     - name: Install filebeat deb
       apt:
         deb: "/tmp/{{ pkg_name }}"
         state: present
+
+    - name: Copy filebeat.yml
+      template:
+        src: templates/filebeat.yml.j2
+        mode: 0644
+        dest: /etc/filebeat/filebeat.yml
 
     - name: Configure nginx module
       copy:
@@ -63,16 +69,14 @@
 ...
     
     
-
-- name: Configure web server 2
-  hosts: webserver2.ru-central1.internal
-  gather_facts: no
-  become: yes
-  tasks:
-    - name: Copy index.html server2 
-      copy:
-        src: templates2/index.html
-        dest: /var/www/html/
-    
-
-...
+#
+#- name: Configure web server 2
+#  hosts: webserver2.ru-central1.internal
+#  gather_facts: no
+#  become: yes
+#  tasks:
+#    - name: Copy index.html server2 
+#      copy:
+#        src: templates2/index.html
+#        dest: /var/www/html/
+# ...
