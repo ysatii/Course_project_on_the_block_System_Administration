@@ -17,7 +17,7 @@
 * [Логи](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Logs.md)
 * [Сеть](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Network.md.)
 * [Резервное копирование](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/infrastructure.md)
-* Дополнительно
+* [установка П.О.](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Ansible.md)
 
 
  

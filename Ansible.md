@@ -10,7 +10,9 @@
   * 4_zabbix_copy_all.yml - установка zabbix агента на все оставшиеся машины кроме машины bastion
   * 5_zabbix_bastion.yml - установка zabbix агента на машину bastion 
   
-  
+```sh
+ansible-playbook 1_elk.yml
+```
 
 
 ## 1_elk.yml - Скрипт дя установки стэка ELK

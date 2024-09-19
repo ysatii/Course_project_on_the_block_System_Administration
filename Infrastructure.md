@@ -29,14 +29,10 @@ terraform apply --auto-approve
 ```
 
 
-Запускаем плейбук web.yml из директории ansible.
-```sh
-ansible-playbook web.yml
-```
-В результате работы плейбука будет настроено:
-- веб сервер nginx
-- веб страница index.html и index.html  на webserver2
-- 
+Запускаем все плайбуки по очереди из директории ansible.  перед этим прописав в файле ansible/inventory.ini 
+
+
+* [установка П.О.](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Ansible.md)
 
 ssh -o ProxyCommand="ssh -i /home/lamer/.ssh/test -W %h:%p test@89.169.152.12" test@zabbix-server.ru-central1.internal  
 
