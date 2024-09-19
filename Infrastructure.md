@@ -38,7 +38,8 @@ terraform apply --auto-approve
 ## При необходимости можем подлючиться к любой машине через SSH прокси 
 
 ssh -o ProxyCommand="ssh -i /home/lamer/.ssh/test -W %h:%p test@89.169.152.12" test@zabbix-server.ru-central1.internal  
-89.169.152.12- это ip адрес машины бастион, zabbix-server.ru-central1.internal - внутренное доменное имя в сети 
+89.169.152.12- это ip адрес машины бастион,  
+ zabbix-server.ru-central1.internal - внутренное доменное имя в сети  
 
 
 ## Виртуальные машины
