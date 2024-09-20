@@ -125,6 +125,7 @@
     systemd:
         name: "{{ item }}"
         state: restarted
+        enabled: true  
     with_items:
         - zabbix-server
         - zabbix-agent

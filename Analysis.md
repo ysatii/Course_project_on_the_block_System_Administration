@@ -21,10 +21,7 @@
 - bastion
 - load balansir – передача трафика на web1 и web2 
 
-2. схема сети
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/network_diagram.jpg)
-
-Создать сеть и разделить ее на подсети
+2. Создать сеть и разделить ее на подсети
 - общедоступная сеть, zabbix, kibana, load balancer, bastion
 - закрытый сегмент 1, web1, elasticsearch, 
 - закрытый сегмент 2, web2
@@ -40,14 +37,14 @@
 
 4.	Резервное копирование, снятие снепшотов и установка расписания.  Время в расписании  устанавливается по GMT+0 
 
-5. провести проверку работоспобности.
+5. Провести проверку работоспобности.
 
 ## Этап 2 использование ansible Для установки программного обеспеения
 На каждой виртуальной машине должно быть установлено программное обеспечение согласно списка 
   - web,  nginx, zabbix agen, index1
     - web 2, nginx, zabbix agent,index2
     - elasticsearch, elasticsearch, zabbix agent
-    - zabbix, zabbix,appatch, pgsql,php zabbix agent 
+    - zabbix, zabbix,appatch, pgsql,php, zabbix agent 
     - kibana, kibana zabbix agent
     - bastion , zabbix agent
 Программные продукты elasticsearch, zabbix, kibana – можно установить скопировав пакеты на соответствующие сервера и запустить их установку либо использовать докер
