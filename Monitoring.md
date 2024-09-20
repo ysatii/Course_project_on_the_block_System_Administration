@@ -86,6 +86,8 @@ systemctl status nginx
 Все эти действия в автоматическом режиме сделает скрипт /ansible/2_web.yml
 
 
+[файл для   добавления хостов в zabbix](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/zbx_export_hosts.yaml)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_21.jpg)
 
 Добавим новый сервер в систему мониторинга, установим шаблон "Nginx by Zabbix agent"
 ![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_19.jpg)
