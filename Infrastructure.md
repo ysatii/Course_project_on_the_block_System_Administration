@@ -35,11 +35,11 @@ terraform apply --auto-approve
 * [установка П.О.](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Ansible.md)
 
 
-## При необходимости можем подлючиться к любой машине через SSH прокси 
+## При необходимости можем подлючиться к любой машине через SSH прокси - машина bastion
 
 ssh -o ProxyCommand="ssh -i /home/lamer/.ssh/test -W %h:%p test@89.169.152.12" test@zabbix-server.ru-central1.internal  
 89.169.152.12- это ip адрес машины бастион,  
- zabbix-server.ru-central1.internal - внутренное доменное имя в сети  
+zabbix-server.ru-central1.internal - внутренное доменное имя в сети  
 
 
 ## Виртуальные машины

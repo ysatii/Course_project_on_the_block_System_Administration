@@ -30,10 +30,9 @@
 
 ### Мониторинг сервиса nginx  
 https://mhost.by/knowledgebase/204/monitoring-nginx-s-pomoshchiu-zabbix.html?ysclid=m19lwfsgj1832761257 
-Статья описывает что нужно сделать что бы корректно получать данные
-в качестве примера на машине webserver1.ru-central1.internal
-создадим файл  /etc/nginx/conf.d/stub_status.conf 
-с содеримым 
+Статья описывает что нужно сделать что бы корректно получать данные в качестве примера на машине webserver1.ru-central1.internal  
+создадим файл  /etc/nginx/conf.d/stub_status.conf с содеримым   
+
 ```
 server {
     listen 127.0.0.1:80;
@@ -68,6 +67,8 @@ systemctl status nginx
 error_log /var/log/nginx/error.log;
 access_log /var/log/nginx/access.log;
 ```
+
+
 нужно заменить на 
 ```
  /etc/nginx/nginx.conf
@@ -77,12 +78,11 @@ access_log /var/log/nginx/access.log;
  access_log /var/log/nginx/access.log main;
  ```
 
- Далее произвести проверку корректности кофигурации, привести перезагрузку сервиса 
+Далее произвести проверку корректности кофигурации, привести перезагрузку сервиса 
  ```
 nginx -t
 systemctl restart nginx
 systemctl status nginx
-systemctl restart nginx
 ```
 
 

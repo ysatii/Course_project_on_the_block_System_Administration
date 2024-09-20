@@ -218,7 +218,7 @@ resource "yandex_alb_load_balancer" "lb1" {
 
 
 
-## инфраструктура
+## Инфраструктура
 ### Балансировщик  
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_4.jpg)
 
@@ -246,6 +246,5 @@ resource "yandex_alb_load_balancer" "lb1" {
 
 ### Виртуальные машины
 * [Инфраструктура](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/infrastructure.md)
- 
 
  [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)

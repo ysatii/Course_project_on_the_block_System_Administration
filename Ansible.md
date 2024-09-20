@@ -81,8 +81,7 @@ ansible-playbook 1_elk.yml
 Скрипт  скопирует утановит и настроет elasticsearch, kibana на elastic.ru-central1.internal и kibana-server.ru-central1.internal соостветственно!
 
 
-
-## 2_web.yml - Скрипт установливает скрпиты на WEB сервера
+## 2_web.yml - Скрипт установливает П.О. на WEB сервера
  
 <details>
 <summary>Нажмите для просмотра листинга скрипта</summary>
@@ -152,7 +151,6 @@ ansible-playbook 1_elk.yml
         enabled: true
 ...
     
-    
 
 - name: Configure web server 2
   hosts: webserver2.ru-central1.internal
@@ -167,9 +165,9 @@ ansible-playbook 1_elk.yml
 ```
 </details>
 
-Скрипт установит и настроит nginx, Filebeat произведет перзагрузку обоих сервисов 
+Скрипт установит и настроит nginx, filebeat произведет перзагрузку обоих сервисов.  
 Также есть закоментированная часть кода для проверки корректности работы балансировщика! 
-на второй веб серве будет загружен скрипт, что позвлит понимать с какого из веб серверов идет ответ 
+на второй веб серве будет загружен скрипт, что позвлит понимать с какого из веб серверов идет ответ!
 
 
 ## 3_conf_zabbix_copy.yml - установка пакета zabbix на машину zabbix-server
@@ -329,13 +327,6 @@ ansible-playbook 1_elk.yml
   #    state: restarted
   #    enabled: true
   #  loop: ["zabbix-server", "zabbix-agent", "nginx", "php8.1-fpm"]
-
-
-
-
-
-
-
 
 
 
