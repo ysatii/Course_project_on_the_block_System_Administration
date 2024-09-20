@@ -149,18 +149,54 @@ ansible-playbook 1_elk.yml
         name: filebeat.service
         state: restarted
         enabled: true
-...
-    
-
-- name: Configure web server 2
-  hosts: webserver2.ru-central1.internal
+- name: Мониторинг nginx
+  hosts: internal_servers
   gather_facts: no
   become: yes
   tasks:
-    - name: Copy index.html server2 
-      copy:
-        src: templates2/index.html
-        dest: /var/www/html/
+    - name: Copy stub_status.conf
+      template:
+        src: templates2/stub_status.conf
+        mode: 0644
+        dest:  /etc/nginx/conf.d/stub_status.conf
+
+    - name:  Добавляем настройки в  /etc/nginx/nginx.conf
+      blockinfile:
+        path: /etc/nginx/nginx.conf
+        marker: "access_log /var/log/nginx/access.log;"
+        insertafter: "access_log /var/log/nginx/access.log;"
+        block: "{{ lookup('file', 'templates2/nginx.conf') }}"
+    
+    - name: deleting a line error.log
+      lineinfile:
+        path: /etc/nginx/nginx.conf
+        state: absent
+        regexp: '^% error_log /var/log/nginx/error.log;'
+
+    - name: deleting a line access.log
+      lineinfile:
+        path: /etc/nginx/nginx.conf
+        state: absent
+        regexp: '^%access_log /var/log/nginx/access.log;'
+
+    - name: restart nginx
+      systemd:
+        name: nginx.service
+        state: restarted
+        enabled: true
+     
+
+    
+
+#- name: Configure web server 2
+#  hosts: webserver2.ru-central1.internal
+#  gather_facts: no
+#  become: yes
+#  tasks:
+#    - name: Copy index.html server2 
+#      copy:
+#        src: templates2/index.html
+#        dest: /var/www/html/
 ...
 ```
 </details>

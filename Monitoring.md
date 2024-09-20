@@ -62,7 +62,7 @@ systemctl status nginx
 ```
 
 
-строки  
+строки Файла /etc/nginx/nginx.conf
 ```
 error_log /var/log/nginx/error.log;
 access_log /var/log/nginx/access.log;
@@ -71,7 +71,6 @@ access_log /var/log/nginx/access.log;
 
 нужно заменить на 
 ```
- /etc/nginx/nginx.conf
  log_format main '$remote_addr - $remote_user [$time_local] "$request" ' '$status $body_bytes_sent 
  "$http_referer" ' ' "$http_user_agent" "$http_x_forwarded_for"';
  error_log /var/log/nginx/error.log notice;
@@ -84,7 +83,7 @@ nginx -t
 systemctl restart nginx
 systemctl status nginx
 ```
-
+Все эти действия в автоматическом режиме сделает скрипт /ansible/2_web.yml
 
 
 
