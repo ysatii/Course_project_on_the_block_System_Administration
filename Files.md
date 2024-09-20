@@ -35,5 +35,7 @@
 * Sait.md - Файл содержит отчет о работе балнсировщика и WEB-сервиса
 * test - закрытый ключ ssh для виртуальных машин
 * test.pub - открытый ключ ssh для виртуальных машин
+* zbx_export_hosts.yaml файл для   добавления хостов в zabbix
+
 
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
