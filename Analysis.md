@@ -25,6 +25,8 @@
  - Общедоступная сеть, zabbix, kibana, load balancer, bastion
  - Закрытый сегмент 1, web1, elasticsearch, 
  - Закрытый сегмент 2, web2
+ 
+ ![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/shema.jpg)
 
 3. Создание security group, для пропуска нужного трафика
  - web, принимаем трафик 80 порт, трафик 22 от bastion
