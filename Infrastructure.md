@@ -5,12 +5,7 @@
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
 
 ## Развертывание инфраструктуры:
-из папки terraform
-```sh
-terraform init
-terraform apply -target=module.vpc_up --auto-approve
-```
------------------------------------------------------------------
+
 
 
 из папки terraform
