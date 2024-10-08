@@ -1,35 +1,35 @@
-- name: Configure zabbix agent to bastion
-  hosts: bastion
+- name: Установка Zabbix агента на сервера
+  hosts: internal_servers
   gather_facts: no
   become: yes
   tasks:
-    - name: Copy zabbix package
+    - name: Копируем zabbix пакет
       copy:
         src: packages/{{ pkg_zabbix }}
         dest: /tmp/
 
-    - name: Install zabbix repository
+    - name: Устанавливаем zabbix репозиторий
       command: dpkg -i /tmp/{{ pkg_zabbix }}
 
-    - name: Install zabbix-agent
+    - name: Устанавливаем zabbix-agent
       apt:
         name: zabbix-agent
         state: present
         update_cache: yes
 
-    - name: Add server IP
+    - name: Добавляем IP zabbix сервера
       replace:
         path: /etc/zabbix/zabbix_agentd.conf
         regexp: 'Server=127.0.0.1'
         replace: 'Server={{ zabbix_server }}'
 
-    - name: Add server IP
+    - name: Добавляем IP активного сервера
       replace:
         path: /etc/zabbix/zabbix_agentd.conf
         regexp: 'ServerActive=127.0.0.1'
         replace: 'ServerActive={{ zabbix_server }}'
 
-    - name: Restart zabbix agent
+    - name: Перезапускаем zabbix agent
       systemd:
         name: zabbix-agent
         state: restarted

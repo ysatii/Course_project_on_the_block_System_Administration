@@ -1,15 +1,14 @@
-- name: Установка и настройка zabbix 
+- name: Установка zabbix сервера с испольгованием pgsql кластера yandex cloud
   hosts: zabbix_server
   gather_facts: no
   vars:
-    host: "localhost"                      # Укажите адрес хоста
-    db_port: 5432                         # Укажите порт PostgreSQL (по умолчанию 5432)
-    db_name: "zabbix"                     # Укажите имя базы данных
-    db_user: "{{ zabbix_user }}"          # Укажите пользователя базы данных
-    db_password: "{{ zabbix_password }}"  # Укажите пароль пользователя базы данных
+    host: c-{{ pg_cluster_id }}.rw.mdb.yandexcloud.net # Укажите адрес хоста
+    db_port: 6432                                           # Укажите порт PostgreSQL (по умолчанию 5432)
+    db_name: "zabbix"                                       # Укажите имя базы данных
+    db_user:  "{{ zabbix_user }}"                           # Укажите пользователя базы данных
+    db_password: "{{ pg_admin_password }}"                  # Укажите пароль пользователя базы данных
   become: yes
   tasks:
-
  
   - name: Обновление системы и установка зависимостей
     apt:
@@ -17,64 +16,93 @@
       name: ['wget', 'curl', 'nginx', 'postgresql', 'postgresql-contrib', 'php-fpm', 'php-pgsql', 'php-bcmath', 'php-mbstring', 'php-gd', 'php-xml', 'mc']
       state: present
    
-  - name: Установка  postgresql
-    apt:
-      name: postgresql
-      state: present
+ 
 
-  - name: Копирование установочного пакета zabbix репозитория
+  - name: Копируем zabbix пакет
     copy:
       src: packages/{{ pkg_zabbix }}
       dest: /tmp/
 
-  - name: Установка zabbix репозитория
+  - name: Устанавливаем zabbix репозиторий 
     command: dpkg -i /tmp/{{ pkg_zabbix }}
 
-  - name: Обновление кеша установщика
+  - name: обновляем кеш системы
     apt:
       update_cache: yes
 
-  
-  - name: Установка  Zabbix Server и компонентов
+   
+  - name: Установливаем Zabbix Server и компоненты
     become: yes
     apt:
       name: ['zabbix-server-pgsql', 'zabbix-frontend-php', 'zabbix-nginx-conf', 'zabbix-agent', 'zabbix-sql-scripts']
       state: present
+ 
+  - name: Копируем файл внутри удаленной машины
+    copy:
+      src: /usr/share/zabbix-sql-scripts/postgresql/server.sql.gz
+      dest: /tmp/server.sql.gz
 
-  # --------------------------------------------------------------
 
-  - name: Создаем пользователя pgsql и базы данных
+  - name : Распаковываем server.sql.gz 
     shell:
       cmd: |
-        su - postgres -c "psql --command \"CREATE USER {{ zabbix_user }} WITH PASSWORD '{{ zabbix_password }}';\"" && \
-        su - postgres -c "psql --command \"CREATE DATABASE zabbix OWNER {{ zabbix_user }};\""         
-        
- 
-  - name: Импортировать начальную структуру базы данных pgsql 
-    shell: |
-      zcat /usr/share/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u {{ zabbix_user }} -p {{ zabbix_password }} psql zabbix  | sudo -u {{ zabbix_user }} -p {{ zabbix_password }} psql zabbix
-  
-   #  ----------------------------------------
-   
-  - name: Копируем zabbix_server.conf файл настроек zabbix
+        cd /tmp
+        zcat server.sql.gz >  server.sql
+
+  - name: Загружаем начальные данные в базу zabbix
+    community.postgresql.postgresql_db:
+        name: zabbix
+        login_host: "{{ host }}"
+        login_password: "{{ db_password }}"
+        login_user: "{{ db_user }}"
+        port: 6432
+        state: restore
+        target: /tmp/server.sql
+    become: yes
+
+
+
+  - name: Дамп базы данных поднят удачно
+    ansible.builtin.debug:
+        msg: "Database imported successfully!"
+
+  - name: "Ansible | Print a variable"
+    debug:
+      msg: "Использован кластер зпыйд yandex-cloud со следующими настройками db_host = {{ host }}, \n db_name = {{ db_name }}, \n db_user = {{ db_user }}, \n db_password = {{ db_password }},\n db_port = {{db_port}}"
+ # -----------------------------------------
+
+  - name: Копируем файл настроек zabbix сервера zabbix_server.conf
     template:
-      src: templates/zabbix_server.conf.j2
+      src: templates/zabbix_server.conf2.j2
       mode: 0644
       dest: /etc/zabbix/zabbix_server.conf
-  
-    
-  - name: Устанавливаем пароль пользователя pgsql в файле /etc/zabbix/zabbix_server.conf
+
+  - name: Устанавливаем пароль базы данных PostgreSQL
     lineinfile:
        dest: /etc/zabbix/zabbix_server.conf
        regexp: '^# DBPassword='
        line: 'DBPassword={{ db_password }}' 
- #
-  - name : Очищаем файл настроек web интерфейса etc/zabbix/web/zabbix.conf.php
+ 
+  # Настройка Zabbix Server
+  - name: Устанавливаем  адврес хоста кластера yandex cloud PostgreSQL
+    lineinfile:
+       dest: /etc/zabbix/zabbix_server.conf
+       regexp: '# DBHost='
+       line: 'DBHost={{ host }}' 
+
+  - name: Устанавливаем порт кластера yandex-cloud PostgreSQL 
+    lineinfile:
+       dest: /etc/zabbix/zabbix_server.conf
+       regexp: '# DBPort='
+       line: 'DBPort={{ db_port }}' 
+
+  - name : Очищаем файл настроек web интерйейса zabbix.conf.php
     shell:
       cmd: |
         echo -n > /etc/zabbix/web/zabbix.conf.php
 
-  - name: Генерируем содержимое файла настроек web интерфейса /etc/zabbix/web/zabbix.conf.php
+
+  - name: Генеририуем соержимое йайла настроек web интерфейса /etc/zabbix/web/zabbix.conf.php
     become: yes
     blockinfile:
        path: /etc/zabbix/web/zabbix.conf.php
@@ -84,6 +112,7 @@
 
           $DB['TYPE']				= 'POSTGRESQL';
           $DB['SERVER']			= '{{ host }}';
+          $DB['PORT']			= '{{ db_port }}';
           $DB['DATABASE']		= '{{ db_name }}';
           $DB['USER']			= '{{ db_user }}';
           $DB['PASSWORD']		= '{{ db_password }}';
@@ -117,9 +146,7 @@
 
           $IMAGE_FORMAT_DEFAULT	= IMAGE_FORMAT_PNG;
  
-  
-  
-  - name: Настроиваем  PHP для Zabbix /etc/php/8.1/fpm/php.ini
+  - name: Настраиваем PHP для работы Zabbix
     become: yes
     blockinfile:
        path: /etc/php/8.1/fpm/php.ini
@@ -131,7 +158,8 @@
          memory_limit = 128M
          date.timezone = Europe/Moscow
 
-  - name: Настроиваем  Nginx для Zabbix /etc/nginx/conf.d/zabbix.conf
+ 
+  - name: Настроиваем  Nginx для работы с Zabbix
     blockinfile:
       path: /etc/nginx/conf.d/zabbix.conf
       block: |
@@ -173,3 +201,10 @@
   - name: Печать адреса сервера zabbix
     ansible.builtin.debug:
         msg: "Для работы с zabbix перейдите по адресу {{ zabbix_server_ip }} логин 'Admin' пароль 'zabbix'"
+
+
+
+
+
+
+

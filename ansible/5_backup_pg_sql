@@ -1,0 +1,35 @@
+---
+- name: Backup PostgreSQL Database
+  hosts: database_servers  # Укажите вашу группу хостов
+  vars:
+    db_name: "your_database_name"
+    db_user: "your_database_user"
+    db_host: "localhost"
+    db_port: "5432"
+    backup_dir: "/path/to/backup/directory"
+    timestamp: "{{ ansible_date_time.iso8601 }}"
+    backup_file: "{{ backup_dir }}/{{ db_name }}_{{ timestamp }}.sql"
+
+  tasks:
+    - name: Ensure backup directory exists
+      file:
+        path: "{{ backup_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Create PostgreSQL database dump
+      command: >
+        pg_dump -h {{ db_host }} -p {{ db_port }} -U {{ db_user }} -F c -b -v -f "{{ backup_file }}" "{{ db_name }}"
+      environment:
+        PGPASSWORD: "your_database_password"  # Замените на ваш пароль
+      register: dump_result
+
+    - name: Check if dump was successful
+      debug:
+        msg: "Backup created successfully: {{ backup_file }}"
+      when: dump_result.rc == 0
+
+    - name: Handle dump failure
+      debug:
+        msg: "Error creating backup of database {{ db_name }}"
+      when: dump_result.rc != 0

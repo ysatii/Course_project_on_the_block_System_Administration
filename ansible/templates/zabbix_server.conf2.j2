@@ -90,7 +90,7 @@ SocketDir=/run/zabbix
 #
 # Mandatory: no
 # Default:
-DBHost=localhost
+# DBHost=
 
 ### Option: DBName
 #	Database name.
@@ -100,6 +100,7 @@ DBHost=localhost
 #
 # Mandatory: yes
 # Default:
+# DBName=
 
 DBName=zabbix
 
@@ -124,7 +125,7 @@ DBUser={{ zabbix_user }}
 #
 # Mandatory: no
 # Default:
-# DBPassword=
+DBPassword={{ zabbix_password }}
 
 ### Option: DBSocket
 #	Path to MySQL socket.
