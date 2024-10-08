@@ -5,11 +5,7 @@
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
 
 ### Произведем установку Zabbix  
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1.jpg)
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_1.jpg)
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_2.jpg)
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_3.jpg)
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_4.jpg)
+
 ![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_5.jpg)
 ![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_6.jpg)
 
