@@ -4,9 +4,9 @@
 ## Мониторинг
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
 
-### Произведем установку Zabbix  
+### Проверим установку Zabbix  
 
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_5.jpg)
+
 ![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_6.jpg)
 
 ### Добавим все машины в систему мониторинга  

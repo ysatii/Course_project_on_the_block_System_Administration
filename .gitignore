@@ -9,3 +9,5 @@ terraform.tfstate
 terraform.tfstate.backup
 ansible/files/*
 server.sql.gz
+all.yml
+all.yml
