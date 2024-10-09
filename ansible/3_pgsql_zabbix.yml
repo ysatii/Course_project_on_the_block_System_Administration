@@ -15,8 +15,6 @@
       update_cache: yes
       name: ['wget', 'curl', 'nginx', 'postgresql', 'postgresql-contrib', 'php-fpm', 'php-pgsql', 'php-bcmath', 'php-mbstring', 'php-gd', 'php-xml', 'mc']
       state: present
-   
- 
 
   - name: Копируем zabbix пакет
     copy:
@@ -61,7 +59,6 @@
     become: yes
 
 
-
   - name: Дамп базы данных поднят удачно
     ansible.builtin.debug:
         msg: "Database imported successfully!"
@@ -69,7 +66,6 @@
   - name: "Ansible | Print a variable"
     debug:
       msg: "Использован кластер зпыйд yandex-cloud со следующими настройками db_host = {{ host }}, \n db_name = {{ db_name }}, \n db_user = {{ db_user }}, \n db_password = {{ db_password }},\n db_port = {{db_port}}"
- # -----------------------------------------
 
   - name: Копируем файл настроек zabbix сервера zabbix_server.conf
     template:
@@ -83,7 +79,7 @@
        regexp: '^# DBPassword='
        line: 'DBPassword={{ db_password }}' 
  
-  # Настройка Zabbix Server
+ 
   - name: Устанавливаем  адврес хоста кластера yandex cloud PostgreSQL
     lineinfile:
        dest: /etc/zabbix/zabbix_server.conf
