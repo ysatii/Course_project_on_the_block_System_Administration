@@ -1,45 +1,45 @@
 ---
-- name: Configure web server
+- name: Установка пакетов на web сервера
   hosts: internal_servers
   gather_facts: no
   become: yes
   tasks:
-    - name: Update cache
+    - name: Обновление кеш
       apt:
         update_cache: yes
 
-    - name: Install nginx
+    - name: Установка nginx
       apt:
         name: nginx
         state: present
 
-    - name: Copy index.html
+    - name: Копирование страницы index.html на сервера 
       copy:
         src: templates/index.html
         dest: /var/www/html/
     
-    - name: Restart nginx
+    - name: перзапуск nginx
       service:
         name: nginx
         state: restarted
     
-    - name: copy filebeat
+    - name: Копирование filebeat
       copy:
         src: packages/{{ pkg_name }}
         dest: /tmp/
     
-    - name: Install filebeat deb
+    - name: Установка filebeat .deb
       apt:
         deb: "/tmp/{{ pkg_name }}"
         state: present
 
-    - name: Copy filebeat.yml
+    - name: Копирование файла настроек filebeat.yml
       template:
         src: templates/filebeat.yml.j2
         mode: 0644
         dest: /etc/filebeat/filebeat.yml
 
-    - name: Configure nginx module
+    - name: Конфигурирование nginx модуля
       copy:
         dest: /etc/filebeat/modules.d/nginx.yml.disabled
         content: |
@@ -53,52 +53,52 @@
               enabled: true
         mode: 0644
      
-    - name: Enable system nginx module in filebeat
+    - name: Активируе nginx модуль для filebeat
       shell:
         cmd:  filebeat setup --dashboards && filebeat modules enable system nginx
         
-    - name: Reload systemd daemon
+    - name: перезапуск демона systemd
       shell:
         cmd: systemctl daemon-reload
     
-    - name: restart Filebeat
+    - name: Перезапускаемм Filebeat
       systemd:
         name: filebeat.service
         state: restarted
         enabled: true
 
  
-- name: Мониторинг nginx
+- name: Мониторинг сервера nginx в zabbix
   hosts: internal_servers
   gather_facts: no
   become: yes
   tasks:
-    - name: Copy stub_status.conf
+    - name: Копируем файл конфигурации stub_status.conf
       template:
         src: templates2/stub_status.conf
         mode: 0644
         dest:  /etc/nginx/conf.d/stub_status.conf
 
-    - name:  Добавляем настройки в  /etc/nginx/nginx.conf
+    - name:  Добавляем настройки в /etc/nginx/nginx.conf
       blockinfile:
         path: /etc/nginx/nginx.conf
         marker: "access_log /var/log/nginx/access.log;"
         insertafter: "access_log /var/log/nginx/access.log;"
         block: "{{ lookup('file', 'templates2/nginx.conf') }}"
     
-    - name: deleting a line error.log
+    - name: Убираем строку из error.log
       lineinfile:
         path: /etc/nginx/nginx.conf
         state: absent
         regexp: '^% error_log /var/log/nginx/error.log;'
 
-    - name: deleting a line access.log
+    - name: Убираем строку из  access.log
       lineinfile:
         path: /etc/nginx/nginx.conf
         state: absent
         regexp: '^%access_log /var/log/nginx/access.log;'
 
-    - name: restart nginx
+    - name: Перезапускаем nginx
       systemd:
         name: nginx.service
         state: restarted
@@ -108,14 +108,3 @@
 ...
 
        
-#
-#- name: Configure web server 2
-#  hosts: webserver2.ru-central1.internal
-#  gather_facts: no
-#  become: yes
-#  tasks:
-#    - name: Copy index.html server2 
-#      copy:
-#        src: templates2/index.html
-#        dest: /var/www/html/
-# ...
