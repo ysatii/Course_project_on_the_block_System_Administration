@@ -1,55 +1,55 @@
 ---
-- name: Configure elasticsearch
+- name: Настройка и установка elasticsearch
   tags: elasticsearch
   hosts: elasticsearch
   gather_facts: no
   become: yes
   tasks:
-    - name: copy elasticsearch
+    - name: Копирование пакета elastics
       copy:
         src: packages/{{ pkg_elastic }}
         dest: /tmp/
 
-    - name: Install elasticsearch deb
+    - name: Установка пакета elasticsearch .deb
       apt:
         deb: "/tmp/{{ pkg_elastic }}"
         state: present
     
-    - name: Copy elasticsearch.yml
+    - name: Копирование файла конфигурации elasticsearch.yml
       copy:
         src: templates/elasticsearch.yml
         mode: 0640
         dest: /etc/elasticsearch/elasticsearch.yml
 
-    - name: restart elasticsearch
+    - name: переззапуск elasticsearch
       service:
         name: elasticsearch
         state: restarted
         enabled: true
 
-- name: Configure kibana
+- name: Настройка и установка kibana
   tags: kibana
   hosts: kibana
   gather_facts: no
   become: yes
   tasks:
-    - name: copy kibana
+    - name: Копирование пакета kibana
       copy:
         src: packages/{{ pkg_kibana }}
         dest: /tmp/
 
-    - name: Install kibana deb
+    - name: Установка пакета kibana .deb
       apt:
         deb: "/tmp/{{ pkg_kibana }}"
         state: present
 
-    - name: Copy kibana.yml
+    - name: Копирование файла конфигурации kibana.yml
       template:
         src: templates/kibana.yml.j2
         mode: 0640
         dest: /etc/kibana/kibana.yml
 
-    - name: restart kibana
+    - name: перезапуск kibana
       systemd:
         name: kibana
         state: restarted
