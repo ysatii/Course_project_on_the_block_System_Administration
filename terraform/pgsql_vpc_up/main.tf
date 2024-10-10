@@ -176,8 +176,8 @@ resource "yandex_compute_instance" "zabbix-server" {
   zone        = "ru-central1-a"
 
   resources {
-    cores         = 2
-    memory        = 2
+    cores         = 4
+    memory        = 4
     core_fraction = 20
   }
   

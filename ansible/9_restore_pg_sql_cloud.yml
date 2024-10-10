@@ -1,0 +1,169 @@
+---
+- name: Backup PostgreSQL Database
+  hosts: zabbix_server  # Укажите вашу группу хостов
+  gather_facts: no
+  # become_user: postgress
+  vars:
+    #db_host: c-{{ pg_cluster_id }}.rw.mdb.yandexcloud.net # Укажите адрес хоста
+    db_host: localhost # Укажите адрес хоста
+
+    # db_port: 6432                                           # Укажите порт PostgreSQL (по умолчанию 5432)
+    db_port: 5432    
+    port: 5432                   # Укажите порт PostgreSQL (по умолчанию 5432)
+    db_name: "zabbix"                                       # Укажите имя базы данных
+    db_user:  "{{ zabbix_user }}"                           # Укажите пользователя базы данных
+    # db_password: "{{ pg_admin_password }}"                  # Укажите пароль пользователя базы данных
+    db_password: "{{ zabbix_password}}"                  # Укажите пароль пользователя базы данных
+    state: present
+    backup_dir: "/tmp/"
+    timestamp: "{{ ansible_date_time.iso8601 }}"
+    backup_file:   "zabbix.backup" # "{{ backup_dir }}/{{ db_name }}_{{ timestamp }}.backup""{{ backup_dir }}/{{ db_name }}_{{ timestamp }}.backup"
+    postgres_admin_user: "zabbix"  # Пользователь с административными правами в PostgreSQL
+    postgres_admin_password: "zabbix"  # Пароль администратора
+  tasks:
+
+  - name: Install python3-pip
+    apt:
+        name: python3-pip
+        state: present
+    become: yes
+ 
+  - name: Install psycopg2 dependencies
+    apt:
+      name: python3-psycopg2
+      state: present
+    become: yes
+
+  - name: Install psycopg2 with pip
+    pip:
+      name:
+        - psycopg2
+        - psycopg2-binary
+      state: present
+    become: yes
+
+
+
+
+  
+
+
+
+
+- name: Backup PostgreSQL Database
+  hosts: zabbix_server  # Укажите вашу группу хостов
+  gather_facts: no
+  become_user: postgress
+  vars:
+    #db_host: c-{{ pg_cluster_id }}.rw.mdb.yandexcloud.net # Укажите адрес хоста
+    db_host: localhost # Укажите адрес хоста
+
+    # db_port: 6432                                           # Укажите порт PostgreSQL (по умолчанию 5432)
+    db_port: 5432    
+    port: 5432                   # Укажите порт PostgreSQL (по умолчанию 5432)
+    db_name: "zabbix"                                       # Укажите имя базы данных
+    db_user:  "{{ zabbix_user }}"                           # Укажите пользователя базы данных
+    # db_password: "{{ pg_admin_password }}"                  # Укажите пароль пользователя базы данных
+    db_password: "{{ zabbix_password}}"                  # Укажите пароль пользователя базы данных
+    state: present
+    backup_dir: "/tmp/"
+    timestamp: "{{ ansible_date_time.iso8601 }}"
+    backup_file:   "zabbix.backup" # "{{ backup_dir }}/{{ db_name }}_{{ timestamp }}.backup""{{ backup_dir }}/{{ db_name }}_{{ timestamp }}.backup"
+    postgres_admin_user: "zabbix"  # Пользователь с административными правами в PostgreSQL
+    postgres_admin_password: "zabbix"  # Пароль администратора
+
+
+    fk_constraints:
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_8;"
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_7;"
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_6;"
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_5;"
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_4;"
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_3;"
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_2;"
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_1;"
+      - "ALTER TABLE ONLY public.widget DROP CONSTRAINT IF EXISTS c_widget_1;"
+      - "ALTER TABLE ONLY public.valuemap_mapping DROP CONSTRAINT IF EXISTS c_valuemap_mapping_1;"
+      - "ALTER TABLE ONLY public.valuemap DROP CONSTRAINT IF EXISTS c_valuemap_1;"
+      - "ALTER TABLE ONLY public.users_groups DROP CONSTRAINT IF EXISTS c_users_groups_2;"
+      - "ALTER TABLE ONLY public.users_groups DROP CONSTRAINT IF EXISTS c_users_groups_1;"
+      - "ALTER TABLE ONLY public.users DROP CONSTRAINT IF EXISTS c_users_1;"
+      - "ALTER TABLE ONLY public.triggers DROP CONSTRAINT IF EXISTS c_triggers_1;"
+      - "ALTER TABLE ONLY public.trigger_tag DROP CONSTRAINT IF EXISTS c_trigger_tag_1;"
+      - "ALTER TABLE ONLY public.trigger_discovery DROP CONSTRAINT IF EXISTS c_trigger_discovery_2;"
+      - "ALTER TABLE ONLY public.trigger_discovery DROP CONSTRAINT IF EXISTS c_trigger_discovery_1;"
+      - "ALTER TABLE ONLY public.trigger_depends DROP CONSTRAINT IF EXISTS c_trigger_depends_2;"
+      - "ALTER TABLE ONLY public.trigger_depends DROP CONSTRAINT IF EXISTS c_trigger_depends_1;"
+      - "ALTER TABLE ONLY public.token DROP CONSTRAINT IF EXISTS c_token_2;"
+      - "ALTER TABLE ONLY public.token DROP CONSTRAINT IF EXISTS c_token_1;"
+      - "ALTER TABLE ONLY public.task_result DROP CONSTRAINT IF EXISTS c_task_result_1;"
+      - "ALTER TABLE ONLY public.task_remote_command_result DROP CONSTRAINT IF EXISTS c_task_remote_command_result_1;"
+      - "ALTER TABLE ONLY public.task_remote_command DROP CONSTRAINT IF EXISTS c_task_remote_command_1;"
+      - "ALTER TABLE ONLY public.task_data DROP CONSTRAINT IF EXISTS c_task_data_1;"
+      - "ALTER TABLE ONLY public.task_close_problem DROP CONSTRAINT IF EXISTS c_task_close_problem_1;"
+      - "ALTER TABLE ONLY public.task_check_now DROP CONSTRAINT IF EXISTS c_task_check_now_1;"
+  tasks:
+
+  - name: Удаление внешних ключей с таблиц
+    become_user: zabbix
+    command: >
+        psql -h {{ db_host }} -U {{ db_user }} -d {{ db_name }} -c "{{ item }}"
+    with_items: "{{ fk_constraints }}"
+    environment:
+      PGPASSWORD: "{{ db_password }}"
+    ignore_errors: yes  # Игнорируем ошибки, если ключ уже не существует
+
+
+
+
+
+  - name: Получаем список всех таблиц 
+    postgresql_query:
+        db: zabbix
+        login_user: zabbix
+        login_password: zabbix
+        login_host: localhost
+        login_port: 5432
+        query: "SELECT tablename FROM pg_tables WHERE schemaname = 'public';"
+    register: tables
+
+  - name: Удаляем все таблицы
+    postgresql_query:
+        db: zabbix
+        login_user: zabbix
+        login_password: zabbix
+        login_host: localhost
+        login_port: 5432
+        query: "DROP TABLE {{ item }} CASCADE;"
+    loop: "{{ tables.query_result | map(attribute='tablename') | list }}"
+    when: tables.query_result | length > 0
+
+  - name: Пересоздаем базу данных
+    postgresql_db:
+        name: zabbix
+        db: zabbix
+        login_user: zabbix
+        login_password: zabbix
+        login_host: localhost
+        login_port: 5432
+
+
+
+
+ # ----------------------------------------------------
+  - name: Копирование  dump. pgsql zabbix.backup
+    copy:
+      src: templates2/zabbix-server.ru-central1.internal/zabbix.backup
+      dest: /tmp/
+
+  # дополнительные опции --clean --if-exists
+  - name: Restore PostgreSQL database from dump
+    command: >
+        pg_restore -h localhost --clean --if-exists -U zabbix -d zabbix -v /tmp/zabbix.backup
+    environment:
+        PGPASSWORD: "zabbix"
+    register: restore_result
+
+  - name: Log restore result
+    debug:
+        var: restore_result	
