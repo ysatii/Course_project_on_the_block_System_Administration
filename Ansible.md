@@ -267,7 +267,7 @@ ansible-playbook 1_elk.yml
 
 ## requirements.yml - файл уставливает нужные для работы коллекции community.postgresql collection 
 ## необходимо для скрипта 3_pgsql_zabbix.yml, если у Вас нет коллекий запустите этот файл для установки коллекций
- 
+ https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_db_module.html#ansible-collections-community-postgresql-postgresql-db-module
 <detail>
 <summary>Нажмите для просмотра листинга скрипта</summary>
 

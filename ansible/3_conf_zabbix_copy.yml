@@ -10,6 +10,9 @@
   become: yes
   tasks:
 
+  - name: Проверка доступности
+    ping:
+    register: ping_result
  
   - name: Обновление системы и установка зависимостей
     apt:
@@ -17,10 +20,11 @@
       name: ['wget', 'curl', 'nginx', 'postgresql', 'postgresql-contrib', 'php-fpm', 'php-pgsql', 'php-bcmath', 'php-mbstring', 'php-gd', 'php-xml', 'mc']
       state: present
    
-  - name: Установка  postgresql
+ 
+  
+  - name: Обновление кеш
     apt:
-      name: postgresql
-      state: present
+      update_cache: yes
 
   - name: Копирование установочного пакета zabbix репозитория
     copy:
@@ -41,19 +45,23 @@
       name: ['zabbix-server-pgsql', 'zabbix-frontend-php', 'zabbix-nginx-conf', 'zabbix-agent', 'zabbix-sql-scripts']
       state: present
 
-  # --------------------------------------------------------------
+          # --------------------------------------------------------------
 
-  - name: Создаем пользователя pgsql и базы данных
-    shell:
-      cmd: |
-        su - postgres -c "psql --command \"CREATE USER {{ zabbix_user }} WITH PASSWORD '{{ zabbix_password }}';\"" && \
-        su - postgres -c "psql --command \"CREATE DATABASE zabbix OWNER {{ zabbix_user }};\""         
+ # - name: Создаем пользователя pgsql и базы данных
+ #   shell:
+  #    cmd: |
+   #     su - postgres -c "psql --command \"CREATE USER {{ zabbix_user }} WITH PASSWORD '{{ zabbix_password }}';\"" && \
+   #     su - postgres -c "psql --command \"CREATE DATABASE zabbix OWNER {{ zabbix_user }};\""         
         
+
  
   - name: Импортировать начальную структуру базы данных pgsql 
     shell: |
       zcat /usr/share/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u {{ zabbix_user }} -p {{ zabbix_password }} psql zabbix  | sudo -u {{ zabbix_user }} -p {{ zabbix_password }} psql zabbix
   
+
+  
+
    #  ----------------------------------------
    
   - name: Копируем zabbix_server.conf файл настроек zabbix
@@ -172,4 +180,59 @@
 
   - name: Печать адреса сервера zabbix
     ansible.builtin.debug:
-        msg: "Для работы с zabbix перейдите по адресу {{ zabbix_server_ip }} логин 'Admin' пароль 'zabbix'"
+        msg: "Для работы с zabbix перейдите по адресу http://{{ zabbix_server_ip }} логин 'Admin' пароль 'zabbix'"
+
+
+
+
+  - name: Получаем список всех таблич
+    postgresql_query:
+        db: zabbix
+        login_user: zabbix
+        login_password: zabbix
+        login_host: localhost
+        login_port: 5432
+        query: "SELECT tablename FROM pg_tables WHERE schemaname = 'public';"
+    register: tables
+
+  - name: Удаляем все таблицы
+    postgresql_query:
+        db: zabbix
+        login_user: zabbix
+        login_password: zabbix
+        login_host: localhost
+        login_port: 5432
+        query: "DROP TABLE {{ item }} CASCADE;"
+    loop: "{{ tables.query_result | map(attribute='tablename') | list }}"
+    when: tables.query_result | length > 0
+
+  - name: Пересоздаем базу данных
+    postgresql_db:
+        name: zabbix
+        db: zabbix
+        login_user: zabbix
+        login_password: zabbix
+        login_host: localhost
+        login_port: 5432
+
+
+
+        # ----------------------------------------------------
+  - name: Копирование  dump. pgsql zabbix.backup
+    copy:
+      src: templates2/zabbix-server.ru-central1.internal/zabbix.backup
+      dest: /tmp/
+
+  - name: Restore PostgreSQL database from dump
+    command: >
+        pg_restore -h localhost -U zabbix -d zabbix -v /tmp/zabbix.backup
+    environment:
+        PGPASSWORD: "zabbix"
+    register: restore_result
+
+  - name: Log restore result
+    debug:
+        var: restore_result
+
+
+

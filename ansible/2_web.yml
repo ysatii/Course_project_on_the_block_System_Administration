@@ -1,9 +1,14 @@
 ---
 - name: Установка пакетов на web сервера
-  hosts: internal_servers
+  hosts: web_servers
   gather_facts: no
   become: yes
   tasks:
+
+    - name: Проверка доступности
+      ping:
+      register: ping_result
+
     - name: Обновление кеш
       apt:
         update_cache: yes
@@ -69,7 +74,7 @@
 
  
 - name: Мониторинг сервера nginx в zabbix
-  hosts: internal_servers
+  hosts: web_servers
   gather_facts: no
   become: yes
   tasks:

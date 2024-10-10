@@ -5,6 +5,11 @@
   gather_facts: no
   become: yes
   tasks:
+
+    - name: Проверка доступности
+      ping:
+      register: ping_result
+
     - name: Копирование пакета elastics
       copy:
         src: packages/{{ pkg_elastic }}

@@ -9,6 +9,10 @@
     db_password: "{{ pg_admin_password }}"                  # Укажите пароль пользователя базы данных
   become: yes
   tasks:
+
+  - name: Проверка доступности
+    ping:
+      register: ping_result
  
   - name: Обновление системы и установка зависимостей
     apt:

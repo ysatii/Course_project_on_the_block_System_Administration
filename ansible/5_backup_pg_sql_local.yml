@@ -1,0 +1,48 @@
+---
+- name: Backup PostgreSQL Database
+  hosts: zabbix_server  # Укажите вашу группу хостов
+  gather_facts: no
+  vars:
+    #db_host: c-{{ pg_cluster_id }}.rw.mdb.yandexcloud.net # Укажите адрес хоста
+    db_host: localhost # Укажите адрес хоста
+
+    # db_port: 6432                                           # Укажите порт PostgreSQL (по умолчанию 5432)
+    db_port: 5432                                           # Укажите порт PostgreSQL (по умолчанию 5432)
+    db_name: "zabbix"                                       # Укажите имя базы данных
+    db_user:  "{{ zabbix_user }}"                           # Укажите пользователя базы данных
+    # db_password: "{{ pg_admin_password }}"                  # Укажите пароль пользователя базы данных
+    db_password: "{{ zabbix_password}}"                  # Укажите пароль пользователя базы данных
+
+    backup_dir: "/tmp/"
+    timestamp: "{{ ansible_date_time.iso8601 }}"
+    backup_file:   "zabbix.backup" # "{{ backup_dir }}/{{ db_name }}_{{ timestamp }}.backup""{{ backup_dir }}/{{ db_name }}_{{ timestamp }}.backup"
+  tasks:
+
+  #  - name: Ensure backup directory exists
+  #    file:
+  #      path: "{{ backup_dir }}3"
+  #      state: directory
+   #     mode: '0755'
+
+    - name: Create PostgreSQL database dump
+      command: >
+        pg_dump -h {{ db_host }} -p {{ db_port }} -U {{ db_user }} -F c -b -v -f "{{ backup_file }}" "{{ db_name }}"
+      environment:
+        PGPASSWORD: "{{ db_password }}"  # Замените на ваш пароль
+      register: dump_result
+
+    - name: Check if dump was successful
+      debug:
+        msg: "Backup created successfully: {{ backup_file }}"
+      when: dump_result.rc == 0
+
+    - name: Handle dump failure
+      debug:
+        msg: "Error creating backup of database {{ db_name }}"
+      when: dump_result.rc != 0
+
+    - name: получаем файл дамп базы данных 1
+      ansible.builtin.fetch:
+        src: "{{ backup_file }}"
+        dest: templates2/
+      become: yes

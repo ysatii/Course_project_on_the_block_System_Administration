@@ -1,8 +1,16 @@
 - name: Установка Zabbix агента на сервера
-  hosts: internal_servers
+  hosts: all-servers
   gather_facts: no
   become: yes
   tasks:
+    - name: Проверка доступности
+      ping:
+      register: ping_result
+
+    - name: Обновление кеш
+      apt:
+        update_cache: yes
+        
     - name: Копируем zabbix пакет
       copy:
         src: packages/{{ pkg_zabbix }}
