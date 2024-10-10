@@ -79,7 +79,7 @@
 
   - name: Копирование файла zabbix.backup с дампом pgsql 
     copy:
-      src: "{{restore_file}}"
+      src: "{{restore_dir}}/{{restore_file}}"
       dest: /tmp/
 
   # дополнительные опции --clean --if-exists они удалят востанавливаемые объекты

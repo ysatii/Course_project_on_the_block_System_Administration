@@ -6,7 +6,9 @@ db_port_local: 5432
 db_name_local: "zabbix"
 db_user_local:  "zabbix"
 db_password_local: 12345678
-restore_file:   "templates2/zabbix-server.ru-central1.internal/zabbix.backup"
+restore_file:   "templates2/zabbix.backup"
+restore_dir: = "templates2"
+
 
 fk_constraints:
       - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_8;"

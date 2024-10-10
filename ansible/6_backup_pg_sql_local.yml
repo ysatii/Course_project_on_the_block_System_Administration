@@ -1,9 +1,11 @@
 ---
 - name: Бэкапирование базы данных 
   hosts: zabbix_server 
-  gather_facts: no
+  gather_facts: yes
   vars:
     backup_file: "/tmp/{{backup_f}}"
+    timestamp: "{{ ansible_date_time.iso8601 }}"
+    new_name: "/tmp/{{ db_name_local }}_{{ timestamp }}dump.backup"
   tasks:
     - name: Проверяем, существует ли файл на удаленном сервере
       ansible.builtin.stat:
@@ -39,44 +41,21 @@
       ansible.builtin.fetch:
         src: "{{ backup_file }}"
         dest: templates2/
-      become: yes
-
-      
-- name: Бэкапирование базы данных 
-  hosts: zabbix_server 
-  become_user: root
-  gather_facts: no
-  tasks:
-    - name: Указываем путь к файлу на удаленном сервере
-      set_fact:
-        backup_file: "/tmp/{{backup_f}}"
-
-    - name: Проверяем, существует ли файл дампа на удаленном сервере
-      ansible.builtin.stat:
-        path: "{{ backup_file }}"
-      register: backup_stat
-      become: yes
-
-
-    - name: проверяем переменную backup_stat
-      debug:
-        var: backup_stat
-   
-    - name: Проверяем значение переменной backup_file перед fetch
-      debug:
-        msg: "Путь к файлу: {{ backup_file }}"
-    
-
-    - name: Получаем файл дампа базы данных с удаленного сервера
-      ansible.builtin.fetch:
-        src: "/tmp/zabbix.backup" 
-        dest: "templates2/"
         flat: yes
-      become: no  # Поскольку fetch выполняется на локальном сервере, права не нужны
-    #  when: backup_stat.stat.exists
-      delegate_to: localhost
+      become: yes
 
-    - name: Выводим сообщение о том, куда скопирован файл
-      debug:
-        msg: "Файл был скопирован в директорию: templates2/, исходное имя файла: {{ backup_file | basename }}"
-      when: backup_stat.stat.exists is defined and backup_stat.stat.exists
+
+
+    - name: Создаем пользователя pgsql и базы данных
+      shell:
+        cmd: |
+          mv "{{ backup_file }}" "{{new_name}}"
+
+
+
+    - name: Получаем файл дамп базы данных с удаленного сервера время и дата
+      ansible.builtin.fetch:
+        src: "{{new_name}}"
+        dest: "templates2/rezerv/"
+        flat: yes
+      become: yes
