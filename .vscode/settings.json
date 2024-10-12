@@ -1,6 +1,0 @@
-{
-    "yaml.schemas": {
-        "https://noodl.s3.us-west-1.amazonaws.com/noodl.schema.json": "file:///home/lamer/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/Course_project_on_the_block_System_Administration/ansible/9_restore_pg_sql_cloud.yml",
-        "https://raw.githubusercontent.com/palantir/conjure/master/conjure.schema.json": "file:///home/lamer/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/Course_project_on_the_block_System_Administration/ansible/8_backup_pg_sql_cloud.yml"
-    }
-}
