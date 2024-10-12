@@ -1,48 +1,73 @@
 ---
-- name: Backup PostgreSQL Database
-  hosts: zabbix_server  # Укажите вашу группу хостов
-  gather_facts: no
+
+
+
+
+- name: Бэкапирование базы данных 
+  hosts: zabbix_server 
+  gather_facts: yes
   vars:
-    #db_host: c-{{ pg_cluster_id }}.rw.mdb.yandexcloud.net # Укажите адрес хоста
-    db_host: localhost # Укажите адрес хоста
-
-    # db_port: 6432                                           # Укажите порт PostgreSQL (по умолчанию 5432)
-    db_port: 5432                                           # Укажите порт PostgreSQL (по умолчанию 5432)
-    db_name: "zabbix"                                       # Укажите имя базы данных
-    db_user:  "{{ zabbix_user }}"                           # Укажите пользователя базы данных
-    # db_password: "{{ pg_admin_password }}"                  # Укажите пароль пользователя базы данных
-    db_password: "{{ zabbix_password}}"                  # Укажите пароль пользователя базы данных
-
-    backup_dir: "/tmp/"
+    backup_file: "/tmp/{{backup_f}}"
     timestamp: "{{ ansible_date_time.iso8601 }}"
-    backup_file:   "zabbix.backup" # "{{ backup_dir }}/{{ db_name }}_{{ timestamp }}.backup""{{ backup_dir }}/{{ db_name }}_{{ timestamp }}.backup"
+    new_name: "/tmp/{{ db_name_local }}_{{ timestamp }}dump.backup"
+    db_host_cloud: c-{{ pg_cluster_id }}.rw.mdb.yandexcloud.net  
+    db_port_cloud: 6432
+    db_name_cloud: "{{ db_name_local }}"
+    db_user_cloud: "{{ db_user_local }}"
+    db_password_cloud: "{{ db_password_local }}"
   tasks:
 
-  #  - name: Ensure backup directory exists
-  #    file:
-  #      path: "{{ backup_dir }}3"
-  #      state: directory
-   #     mode: '0755'
 
-    - name: Create PostgreSQL database dump
+     
+    - name: Проверяем, существует ли файл на удаленном сервере
+      ansible.builtin.stat:
+        path: "{{ backup_file }}"
+      register: file_stat
+      become: yes
+
+    - name: Удаляем файл, если он существует
+      ansible.builtin.file:
+        path: "{{ backup_file }}"
+        state: absent
+      become: yes
+      when: file_stat.stat.exists
+    
+    - name: Создаем дамп базы данных
       command: >
-        pg_dump -h {{ db_host }} -p {{ db_port }} -U {{ db_user }} -F c -b -v -f "{{ backup_file }}" "{{ db_name }}"
+        pg_dump -h {{ db_host_cloud }} -p {{ db_port_cloud }} -U {{ db_user_cloud }} -F c -b -v -f "{{ backup_file }}" "{{ db_name_cloud}}"
       environment:
-        PGPASSWORD: "{{ db_password }}"  # Замените на ваш пароль
+        PGPASSWORD: "{{ db_password_cloud }}"   
       register: dump_result
 
-    - name: Check if dump was successful
+    - name: Проверяем создан ли бэкап
       debug:
-        msg: "Backup created successfully: {{ backup_file }}"
+        msg: "Дамп успешно создан: {{ backup_file }}"
       when: dump_result.rc == 0
 
-    - name: Handle dump failure
+    - name: Ошибка создания бэкапа
       debug:
-        msg: "Error creating backup of database {{ db_name }}"
+        msg: "Ошибка создания базы данных {{ db_name_local }}"
       when: dump_result.rc != 0
 
-    - name: получаем файл дамп базы данных 1
+    - name: Получаем файл дамп базы данных с удаленного сервера
       ansible.builtin.fetch:
         src: "{{ backup_file }}"
         dest: templates2/
+        flat: yes
+      become: yes
+
+
+
+    - name: Создаем пользователя pgsql и базы данных
+      shell:
+        cmd: |
+          mv "{{ backup_file }}" "{{new_name}}"
+
+
+
+    - name: Получаем файл дамп базы данных с удаленного сервера время и дата
+      ansible.builtin.fetch:
+        src: "{{new_name}}"
+        dest: "templates2/rezerv/"
+        flat: yes
       become: yes

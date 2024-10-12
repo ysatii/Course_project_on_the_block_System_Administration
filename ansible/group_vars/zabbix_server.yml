@@ -6,8 +6,8 @@ db_port_local: 5432
 db_name_local: "zabbix"
 db_user_local:  "zabbix"
 db_password_local: 12345678
-restore_file:   "templates2/zabbix.backup"
-restore_dir: = "templates2"
+restore_file:   "zabbix.backup"
+restore_dir: "templates2"
 
 
 fk_constraints:
@@ -41,3 +41,5 @@ fk_constraints:
       - "ALTER TABLE ONLY public.task_check_now DROP CONSTRAINT IF EXISTS c_task_check_now_1;"
 
 backup_f:   "zabbix.backup" 
+
+

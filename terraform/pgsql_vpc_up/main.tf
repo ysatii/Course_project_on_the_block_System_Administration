@@ -538,7 +538,7 @@ resource "yandex_mdb_postgresql_cluster" "postgres" {
   security_group_ids = [yandex_vpc_security_group.postgres.id, yandex_vpc_security_group.sg-internet.id]
 
   config {
-    version = 15
+    version = 14
     autofailover = true
     resources {
       resource_preset_id = "s2.micro"  #"b1.medium"  #
