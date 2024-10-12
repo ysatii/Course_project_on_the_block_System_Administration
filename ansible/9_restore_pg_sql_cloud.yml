@@ -98,6 +98,7 @@
     environment:
         PGPASSWORD: "{{ db_password_cloud }}"
     register: restore_result
+    
   # если нужжен результат востановления базы данных раскоментируйте строки ниже
   # - name: Печатаем результат востановления данных
   #  debug:

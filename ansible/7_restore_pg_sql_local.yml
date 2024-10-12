@@ -51,15 +51,25 @@
     shell:
       cmd: |
         sudo -u postgres psql -c "ALTER USER zabbix WITH SUPERUSER;"
-
+  
   - name: Удаление внешних ключей с таблиц
+    become_user: "{{ db_user_cloud }}"
     command: >
-      psql -h "localhost" -U "zabbix" -d "zabbix" -c "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_8;"
-    ignore_errors: yes
-    loop:
-      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_8;"
-      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_7;"
-      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_6;"
+        psql -h {{ db_host_local }} -U {{ db_user_local }} -p "{{ db_port_local }}" -d {{ db_name_local }} -c "{{ item }}"
+    with_items: "{{ fk_constraints }}"
+    environment:
+      PGPASSWORD: "{{ db_password_cloud }}"
+    ignore_errors: yes  # Игнорируем ошибки, если ключ уже не существует
+
+  
+  #- name: Удаление внешних ключей с таблиц
+  #  command: >
+  #    psql -h "localhost" -U "zabbix" -d "zabbix" -c "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_8;"
+  #  ignore_errors: yes
+  #  loop:
+  #    - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_8;"
+  #    - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_7;"
+  #    - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_6;"
 
   - name: Получаем список всех таблиц
     postgresql_query:
@@ -94,13 +104,22 @@
 
 
   # дополнительные опции --clean --if-exists они удалят востанавливаемые объекты
+  #- name: Restore PostgreSQL database from dump
+  #  command: >
+  #      pg_restore -h "{{ db_host_local }}" -U "{{ db_user_local }}" -d "{{ db_name_local }}" -v /tmp/zabbix.backup
+  #  environment:
+  #      PGPASSWORD: "{{ db_password_local }}"
+  #  register: restore_result
+  #  ignore_errors: yes
+
+    # дополнительные опции --clean --if-exists они удалят востанавливаемые объекты
   - name: Restore PostgreSQL database from dump
     command: >
-        pg_restore -h "{{ db_host_local }}" -U "{{ db_user_local }}" -d "{{ db_name_local }}" -v /tmp/zabbix.backup
+        pg_restore -h "{{ db_host_cloud }}" -p "{{ db_port_cloud }}" --clean --if-exists -U "{{ db_user_cloud }}" -d "{{ db_name_cloud }}" -v /tmp/zabbix.backup
     environment:
-        PGPASSWORD: "{{ db_password_local }}"
+        PGPASSWORD: "{{ db_password_cloud }}"
     register: restore_result
-    ignore_errors: yes
+
   # если нужжен результат востановления базы данных раскоментируйте строки ниже
   #- name: Печатаем результат востановления данных
   #  debug:
