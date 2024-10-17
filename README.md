@@ -25,7 +25,12 @@
 * [Сеть](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Network.md.)
 * [Резервное копирование](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/infrastructure.md)
 
+## дополнительный задания 1 
 
+ 1.1 Реализовать для Zabbix нужно реализовать разделение компонент - frontend, server, database. Frontend отдельной ВМ поместите в публичную подсеть, назначте публичный IP. 
+ Server поместите в приватную подсеть, настройте security group на разрешение трафика между frontend и server. 
+ 1.2 Для Database используйте Yandex Managed Service for PostgreSQL. Разверните кластер из двух нод с автоматическим failover.
+* [Дополнительное задание 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Additional_tasks.md)
 
  
 

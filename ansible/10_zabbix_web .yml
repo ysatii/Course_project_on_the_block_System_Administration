@@ -1,0 +1,151 @@
+---
+- name: Установка и настройка zabbix (серверная часть)
+  hosts: zabbix_server
+  gather_facts: no
+  vars:
+    host: "localhost"
+    db_port: 5432
+    db_name: "zabbix"
+    db_user: "{{ zabbix_user }}"
+    db_password: "{{ zabbix_password }}"
+  become: yes
+  tasks:
+
+  - name: Проверка доступности
+    ping:
+
+  - name: Обновление системы и установка зависимостей
+    apt:
+      update_cache: yes
+      name: ['wget', 'curl', 'postgresql', 'postgresql-contrib', 'mc']
+      state: present
+
+  - name: Копирование установочного пакета zabbix репозитория
+    copy:
+      src: packages/{{ pkg_zabbix }}
+      dest: /tmp/
+
+  - name: Установка zabbix репозитория
+    command: dpkg -i /tmp/{{ pkg_zabbix }}
+
+  - name: Обновление кеша установщика
+    apt:
+      update_cache: yes
+
+  - name: Установка Zabbix Server и необходимых компонентов
+    apt:
+      name: ['zabbix-server-pgsql', 'zabbix-agent', 'zabbix-sql-scripts']
+      state: present
+
+  - name: Создание пользователя PostgreSQL и базы данных
+    shell: |
+      su - postgres -c "psql --command \"CREATE USER {{ zabbix_user }} WITH PASSWORD '{{ zabbix_password }}';\"" && \
+      su - postgres -c "psql --command \"CREATE DATABASE zabbix OWNER {{ zabbix_user }};\""
+
+  - name: Импорт начальной структуры базы данных PostgreSQL
+    shell: |
+      zcat /usr/share/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u {{ zabbix_user }} psql zabbix
+
+  - name: Копирование файла конфигурации Zabbix Server
+    template:
+      src: templates/zabbix_server.conf.j2
+      dest: /etc/zabbix/zabbix_server.conf
+      mode: 0644
+
+  - name: Установка пароля базы данных в конфигурационном файле Zabbix
+    lineinfile:
+      dest: /etc/zabbix/zabbix_server.conf
+      regexp: '^# DBPassword='
+      line: 'DBPassword={{ db_password }}'
+
+  - name: Перезапуск сервиса Zabbix Server
+    systemd:
+      name: zabbix-server
+      state: restarted
+      enabled: yes
+
+  - name: Перезапуск сервиса Zabbix Agent
+    systemd:
+      name: zabbix-agent
+      state: restarted
+      enabled: yes
+
+
+- name: Установка и настройка Zabbix (веб-часть)
+  hosts: zabbix_web_server
+  gather_facts: no
+  vars:
+    host: "localhost"
+    db_port: 5432
+    db_name: "zabbix"
+    db_user: "{{ zabbix_user }}"
+    db_password: "{{ zabbix_password }}"
+    server_name: "my-zabbix-web"
+  become: yes
+  tasks:
+
+  - name: Обновление системы и установка зависимостей для веб-части
+    apt:
+      update_cache: yes
+      name: ['nginx', 'php-fpm', 'php-pgsql', 'php-bcmath', 'php-mbstring', 'php-gd', 'php-xml']
+      state: present
+
+  - name: Копирование файла конфигурации веб-интерфейса Zabbix
+    blockinfile:
+      path: /etc/zabbix/web/zabbix.conf.php
+      block: |
+        <?php
+        // Zabbix GUI configuration file.
+        $DB['TYPE'] = 'POSTGRESQL';
+        $DB['SERVER'] = '{{ host }}';
+        $DB['DATABASE'] = '{{ db_name }}';
+        $DB['USER'] = '{{ db_user }}';
+        $DB['PASSWORD'] = '{{ db_password }}';
+        $ZBX_SERVER_NAME = 'my-zabbix';
+
+  - name: Настройка PHP для Zabbix
+    blockinfile:
+      path: /etc/php/8.1/fpm/php.ini
+      block: |
+        post_max_size = 16M
+        upload_max_filesize = 2M
+        max_execution_time = 300
+        max_input_time = 300
+        memory_limit = 128M
+        date.timezone = Europe/Moscow
+
+  - name: Настройка Nginx для Zabbix
+    blockinfile:
+      path: /etc/nginx/conf.d/zabbix.conf
+      block: |
+        server {
+            listen 80;
+            server_name  {{ server_name }};
+
+            root /usr/share/zabbix;
+
+            index index.php index.html index.htm;
+
+            location / {
+                try_files $uri $uri/ =404;
+            }
+
+            location ~ \.php$ {
+                fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                include fastcgi_params;
+            }
+
+            location ~ /\.ht {
+                deny all;
+            }
+        }
+
+  - name: Перезапуск сервисов Nginx и PHP-FPM
+    systemd:
+      name: "{{ item }}"
+      state: restarted
+      enabled: yes
+    with_items:
+      - nginx
+      - php8.1-fpm

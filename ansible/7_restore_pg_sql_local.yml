@@ -1,126 +1,46 @@
 ---
-- name: Подготовка к востановлению дазы данных pgsql
-  hosts: zabbix_server 
-  gather_facts: no
-  vars:
-    state: present
-  tasks:
-        
-  - name: Устанавливаем пакеты необходимые для чистки таблиц 
-    ansible.builtin.debug:
-        msg: "Устанавливаем скрипты необходимы для чистки таблиц"
-  
-  - name: Установливаем python3-pip для последующей установки пакетов
-    apt:
-        name: python3-pip
-        state: present
-    become: yes
- 
-  - name: Установливаем зависимости psycopg2  
-    apt:
-      name: python3-psycopg2
-      state: present
-    become: yes
-
-  - name: Устанавливаем psycopg2 с помощью pip
-    pip:
-      name:
-        - psycopg2
-        - psycopg2-binary
-      state: present
-    become: yes
-
-- name: Очищаем базу данных и подымаем дамп
+- name: Востновление дампа базы данных
   hosts: zabbix_server
-  # gather_facts: no
-  become_user: postgress
+  become: yes
   vars:
-    state: present
-
+    ansible_user: root
   tasks:
+  - name: Копирование файла zabbix.backup с дампом pgsql 
+    copy:
+      src: "{{restore_dir}}/{{restore_file}}"
+      dest: /tmp/
 
-  #- name: Drop existing functions
-  #  become: yes
-  #  command: >
-  #    psql -h localhost -R -U zabbix -d zabbix -c "DROP FUNCTION IF EXISTS public.hosts_name_upper_upper();"
-  #    psql -h localhost -R -U zabbix -d zabbix -c "DROP FUNCTION IF EXISTS public.items_name_upper_upper();"
-  #  environment:
-  #    PGPASSWORD: "zabbix"
+  - name: Создаем файл.pgpass file for PostgreSQL authentication
+    copy:
+        dest: /{{ ansible_user }}/.pgpass
+        content: "localhost:5432:zabbix:postgres:12345678\n"
+        owner: "{{ ansible_user }}"
+        mode: '0600'
 
-  - name: Создаем пользователя pgsql и базы данных
-    shell:
-      cmd: |
-        sudo -u postgres psql -c "ALTER USER zabbix WITH SUPERUSER;"
-  
-  - name: Удаление внешних ключей с таблиц
-    become_user: "{{ db_user_cloud }}"
-    command: >
-        psql -h {{ db_host_local }} -U {{ db_user_local }} -p "{{ db_port_local }}" -d {{ db_name_local }} -c "{{ item }}"
-    with_items: "{{ fk_constraints }}"
-    environment:
-      PGPASSWORD: "{{ db_password_cloud }}"
-    ignore_errors: yes  # Игнорируем ошибки, если ключ уже не существует
+  - name: Создаем run_commands.sh скрипт
+    copy:
+        dest: /{{ ansible_user }}/run_commands.sh
+        content: |
+          #!/bin/bash
 
-  
-  #- name: Удаление внешних ключей с таблиц
-  #  command: >
-  #    psql -h "localhost" -U "zabbix" -d "zabbix" -c "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_8;"
-  #  ignore_errors: yes
-  #  loop:
-  #    - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_8;"
-  #    - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_7;"
-  #    - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_6;"
+          # Подключаемся к PostgreSQL и выполняем команды
+          sudo -u postgres psql << EOF
+          ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT SELECT, INSERT, DELETE, UPDATE ON TABLES TO zabbix WITH GRANT OPTION;
+          CREATE ROLE mdb_replication;
+          CREATE ROLE mdb_admin;
+          CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+          CREATE EXTENSION IF NOT EXISTS "xml2";
+          ALTER USER zabbix WITH SUPERUSER;
+          SELECT * FROM pg_available_extensions WHERE name = 'xml2';
+          ALTER USER postgres WITH PASSWORD '12345678';
+          EOF
 
-  - name: Получаем список всех таблиц
-    postgresql_query:
-        db: "{{ db_name_local }}"
-        login_user: "{{ db_user_local }}"
-        login_password: "{{ db_password_local }}"
-        login_host: "{{db_host_local}}"
-        login_port: "{{ db_port_local }}"
-        query: "SELECT tablename FROM pg_tables WHERE schemaname = 'public';"
-    register: tables
+          # Выполняем восстановление из бэкапа
+          pg_restore -h localhost -p 5432 -U postgres -d zabbix --clean --if-exists -v /tmp/zabbix.backup
+        owner: "{{ ansible_user }}"
+        mode: '0755'
 
-  - name: Удаляем все таблицы
-    postgresql_query:
-        db: "{{ db_name_local }}"
-        login_user: "{{ db_user_local }}"
-        login_password: "{{ db_password_local }}"
-        login_host: "{{db_host_local}}"
-        login_port: "{{ db_port_local }}"
-        query: "DROP TABLE {{ item }} CASCADE;"
-    loop: "{{ tables.query_result | map(attribute='tablename') | list }}"
-    when: tables.query_result | length > 0
-
-  - name: Пересоздаем базу данных
-    postgresql_db:
-        db: "{{ db_name_local }}"
-        login_user: "{{ db_user_local }}"
-        login_password: "{{ db_password_local }}"
-        login_host: "{{db_host_local}}"
-        login_port: "{{ db_port_local }}"
-
-
-
-
-  # дополнительные опции --clean --if-exists они удалят востанавливаемые объекты
-  #- name: Restore PostgreSQL database from dump
-  #  command: >
-  #      pg_restore -h "{{ db_host_local }}" -U "{{ db_user_local }}" -d "{{ db_name_local }}" -v /tmp/zabbix.backup
-  #  environment:
-  #      PGPASSWORD: "{{ db_password_local }}"
-  #  register: restore_result
-  #  ignore_errors: yes
-
-    # дополнительные опции --clean --if-exists они удалят востанавливаемые объекты
-  - name: Restore PostgreSQL database from dump
-    command: >
-        pg_restore -h "{{ db_host_cloud }}" -p "{{ db_port_cloud }}" --clean --if-exists -U "{{ db_user_cloud }}" -d "{{ db_name_cloud }}" -v /tmp/zabbix.backup
-    environment:
-        PGPASSWORD: "{{ db_password_cloud }}"
-    register: restore_result
-
-  # если нужжен результат востановления базы данных раскоментируйте строки ниже
-  #- name: Печатаем результат востановления данных
-  #  debug:
-  ##   var: restore_result	
+  - name: Execute run_commands.sh script
+    command: /{{ ansible_user }}/run_commands.sh
+    become: yes
+    become_user: "{{ ansible_user }}"
