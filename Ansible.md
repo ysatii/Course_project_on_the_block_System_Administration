@@ -595,9 +595,9 @@ ansible-playbook 1_elk.yml
 
 секция  
 [all:vars]
-/# bastion_host=84.201.159.142
-/# zabbix_server_ip=89.169.147.200
-/# эти значения берем из файла /ansible/group_vars/all.yml его создаст terraform!
+/# bastion_host=84.201.159.142  
+/# zabbix_server_ip=89.169.147.200  
+/# эти значения берем из файла /ansible/group_vars/all.yml его создаст terraform!  
 
 Каждый раз при запуске ansible-playbook адреса bastion_host и zabbix_server берем из файла /ansible/group_vars/all.yml
 
