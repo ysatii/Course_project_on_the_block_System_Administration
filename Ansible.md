@@ -8,7 +8,7 @@
   * 2_web.yml - Скрипт установливает скрпиты на WEB сервера
   * 3_conf_zabbix_copy.yml - установка пакета zabbix на машину zabbix-server
   * 4_zabbix_copy_all.yml - установка zabbix агента на все оставшиеся машины кроме машины bastion
-  * 5_zabbix_bastion.yml - установка zabbix агента на машину bastion 
+
   
 ```sh
 ansible-playbook 1_elk.yml
@@ -27,6 +27,11 @@ ansible-playbook 1_elk.yml
   gather_facts: no
   become: yes
   tasks:
+
+    - name: Проверка доступности
+      ping:
+      register: ping_result
+
     - name: Копирование пакета elastics
       copy:
         src: packages/{{ pkg_elastic }}
@@ -77,7 +82,6 @@ ansible-playbook 1_elk.yml
         state: restarted
         enabled: true
 ...
-
 ```
 </details>
 Скрипт  скопирует утановит и настроет elasticsearch, kibana на elastic.ru-central1.internal и kibana-server.ru-central1.internal соостветственно!
