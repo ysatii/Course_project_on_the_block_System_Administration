@@ -95,4 +95,15 @@ systemctl status nginx
 ![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_17.jpg)
 ![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_18.jpg)
 
+## Сохранение и востановление данных Zabbix
+### Сохранеие данных 
+### При работе с локальной установкой Zabbix 
+* Создание копии локальной БД zabbix ansible-playbook  /ansible/6_backup_pg_sql_local.yml
+создаеться дамп  в папку /ansible/templates2/rezerv/ с текущей датой и временем в качестве архива
+также будет скопирован dump.backup в папку /ansible/templates2/zabbix.backup  в качестве текущей резервной копии  
+
+* Поднятие резервной копии БД zabbix ansible-playbook /ansible/7_restore_pg_sql_local.yml
+Поднимаеться копия рабочей базы с наработками - это позволят сохранять результаты работы zabbix и не тереть их при уничтожении облака!
+
+
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)

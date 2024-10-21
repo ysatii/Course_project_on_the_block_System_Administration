@@ -462,7 +462,76 @@ ansible-playbook 1_elk.yml
 ```
 </details>
 
+## 6_backup_pg_sql_local.yml - Бэкапирование базы данных zabbix
+позволяет сохранить наработки при уничтожении облака
+ 
+<details>
+<summary>Нажмите для просмотра листинга скрипта</summary>
 
+```
+---
+- name: Бэкапирование базы данных 
+  hosts: zabbix_server 
+  gather_facts: yes
+  vars:
+    backup_file: "/tmp/{{backup_f}}"
+    timestamp: "{{ ansible_date_time.iso8601 }}"
+    new_name: "/tmp/{{ db_name_local }}_{{ timestamp }}dump.backup"
+  tasks:
+    - name: Проверяем, существует ли файл на удаленном сервере
+      ansible.builtin.stat:
+        path: "{{ backup_file }}"
+      register: file_stat
+      become: yes
+
+    - name: Удаляем файл, если он существует
+      ansible.builtin.file:
+        path: "{{ backup_file }}"
+        state: absent
+      become: yes
+      when: file_stat.stat.exists
+    
+    - name: Создаем дамп базы данных
+      command: >
+        pg_dump -h {{ db_host_local }} -p {{ db_port_local }} -U {{ db_user_local }} -F c -b -v -f "{{ backup_file }}" "{{ db_name_local}}"
+      environment:
+        PGPASSWORD: "{{ db_password_local }}"   
+      register: dump_result
+
+    - name: Проверяем создан ли бэкап
+      debug:
+        msg: "Дамп успешно создан: {{ backup_file }}"
+      when: dump_result.rc == 0
+
+    - name: Ошибка создания бэкапа
+      debug:
+        msg: "Ошибка создания базы данных {{ db_name_local }}"
+      when: dump_result.rc != 0
+
+    - name: Получаем файл дамп базы данных с удаленного сервера
+      ansible.builtin.fetch:
+        src: "{{ backup_file }}"
+        dest: templates2/
+        flat: yes
+      become: yes
+
+
+
+    - name: Периеименовываем файл имя бд + дата и время создания
+      shell:
+        cmd: |
+          mv "{{ backup_file }}" "{{new_name}}"
+
+
+
+    - name: Получаем файл дамп базы данных с удаленного сервера время и дата
+      ansible.builtin.fetch:
+        src: "{{new_name}}"
+        dest: "templates2/rezerv/"
+        flat: yes
+      become: yes
+```
+</details>
 
 * [Файл инвентаризации](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/ansible/inventory.ini)
  Файл ansible/inventory.ini  Содержит необходимые настройки 
