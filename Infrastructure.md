@@ -6,8 +6,6 @@
 
 ## Развертывание инфраструктуры:
 
-
-
 из папки terraform
 ```sh
 cd vpc_up
@@ -15,7 +13,7 @@ terraform init
 terraform apply --auto-approve
 ```
 
-## Развертывание инфраструктуры:
+## Бекапирование дисков:
 из папки terraform
 ```sh
 cd image_backup
