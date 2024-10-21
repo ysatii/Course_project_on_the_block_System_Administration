@@ -13,7 +13,7 @@ terraform init
 terraform apply --auto-approve
 ```
 
-## Бекапирование дисков:
+## Бекапирование дисков:  
 из папки terraform
 ```sh
 cd image_backup
@@ -21,21 +21,19 @@ terraform init
 terraform apply --auto-approve
 ```
 
-
-
-## Установка П.О. на машины! подробнее по ссылке ниже
+## Установка П.О. на машины! подробнее по ссылке ниже  
 
 * [установка П.О.](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Ansible.md)
 
 
-## При необходимости можем подлючиться к любой машине через SSH прокси - машина bastion
+## При необходимости можем подлючиться к любой машине через SSH прокси - машина bastion  
 
 ssh -o ProxyCommand="ssh -i /home/lamer/.ssh/test -W %h:%p test@89.169.152.12" test@zabbix-server.ru-central1.internal  
 89.169.152.12- это ip адрес машины бастион,  
 zabbix-server.ru-central1.internal - внутренное доменное имя в сети  
 
 
-## Виртуальные машины
+## Виртуальные машины  
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_13.jpg)  
 
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_14.jpg)  
@@ -51,5 +49,5 @@ zabbix-server.ru-central1.internal - внутренное доменное им�
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_1.jpg)  
 
 
-## Проверка работы балансировщика после установки П.О.  
+## Проверка работы балансировщика после установки П.О.   
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
