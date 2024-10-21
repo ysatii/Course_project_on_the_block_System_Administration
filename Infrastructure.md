@@ -24,7 +24,7 @@ terraform apply --auto-approve
 ```
 
 
-## Запускаем все плайбуки по очереди из директории ansible.  перед этим прописав в файле ansible/inventory.ini 
+## Запускаем все плайбуки по очереди из директории ansible.
 ### Установка П.О. на машины! подробнее по ссылке
 
 * [установка П.О.](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Ansible.md)
