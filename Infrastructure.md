@@ -25,7 +25,7 @@ terraform apply --auto-approve
 
 
 ## Запускаем все плайбуки по очереди из директории ansible.
-### Установка П.О. на машины! подробнее по ссылке
+### Установка П.О. на машины! подробнее по ссылке ниже
 
 * [установка П.О.](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Ansible.md)
 
