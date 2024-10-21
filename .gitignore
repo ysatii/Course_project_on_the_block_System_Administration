@@ -11,3 +11,4 @@ ansible/files/*
 server.sql.gz
 all.yml
 all.yml
+.terraform.tfstate.lock.info
