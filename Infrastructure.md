@@ -22,7 +22,7 @@ terraform apply --auto-approve
 ```
 
 
-## Запускаем все плайбуки по очереди из директории ansible.
+## Запускаем ansible-playbook по очереди из директории ansible.
 ### Установка П.О. на машины! подробнее по ссылке ниже
 
 * [установка П.О.](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Ansible.md)
@@ -50,4 +50,5 @@ zabbix-server.ru-central1.internal - внутренное доменное им�
 
 ![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_1.jpg)
 
+## Проверка работы балансировщика после установки П.О.  
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
