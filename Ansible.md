@@ -4,11 +4,12 @@
 
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
 
-  * 1_elk.yml - Скрипт дя установки стэка ELK
-  * 2_web.yml - Скрипт установливает скрпиты на WEB сервера
-  * 3_conf_zabbix_copy.yml - установка пакета zabbix на машину zabbix-server
-  * 4_zabbix_copy_all.yml - установка zabbix агента на все оставшиеся машины кроме zabbix сервер
-  * 6_backup_pg_sql_local.yml - Бекапирование базы zabbix 
+  * 1_elk.yml - Скрипт дя установки стэка ELK  
+  * 2_web.yml - Скрипт установливает скрпиты на WEB сервера  
+  * 3_conf_zabbix_copy.yml - установка пакета zabbix на машину zabbix-server  
+  * 4_zabbix_copy_all.yml - установка zabbix агента на все оставшиеся машины кроме zabbix сервер  
+  * 6_backup_pg_sql_local.yml - Бекапирование базы данных zabbix  
+  * 7_restore_pg_sql_local.yml - востановление базы данных zabbix  
 
 
 ```sh
@@ -531,6 +532,61 @@ ansible-playbook 1_elk.yml
         dest: "templates2/rezerv/"
         flat: yes
       become: yes
+```
+</details>
+
+## 7_restore_pg_sql_local.yml - Востановление базы данных zabbix 
+ 
+<details>
+<summary>Нажмите для просмотра листинга скрипта</summary>
+
+```
+---
+- name: Востновление дампа базы данных
+  hosts: zabbix_server
+  become: yes
+  vars:
+    ansible_user: root
+  tasks:
+  - name: Копирование файла zabbix.backup с дампом pgsql 
+    copy:
+      src: "{{restore_dir}}/{{restore_file}}"
+      dest: /tmp/
+
+  - name: Создаем файл.pgpass file for PostgreSQL authentication
+    copy:
+        dest: /{{ ansible_user }}/.pgpass
+        content: "localhost:5432:zabbix:postgres:12345678\n"
+        owner: "{{ ansible_user }}"
+        mode: '0600'
+
+  - name: Создаем run_commands.sh скрипт
+    copy:
+        dest: /{{ ansible_user }}/run_commands.sh
+        content: |
+          #!/bin/bash
+
+          # Подключаемся к PostgreSQL и выполняем команды
+          sudo -u postgres psql << EOF
+          ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT SELECT, INSERT, DELETE, UPDATE ON TABLES TO zabbix WITH GRANT OPTION;
+          CREATE ROLE mdb_replication;
+          CREATE ROLE mdb_admin;
+          CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+          CREATE EXTENSION IF NOT EXISTS "xml2";
+          ALTER USER zabbix WITH SUPERUSER;
+          SELECT * FROM pg_available_extensions WHERE name = 'xml2';
+          ALTER USER postgres WITH PASSWORD '12345678';
+          EOF
+
+          # Выполняем восстановление из бэкапа
+          pg_restore -h localhost -p 5432 -U postgres -d zabbix --clean --if-exists -v /tmp/zabbix.backup
+        owner: "{{ ansible_user }}"
+        mode: '0755'
+
+  - name: Execute run_commands.sh script
+    command: /{{ ansible_user }}/run_commands.sh
+    become: yes
+    become_user: "{{ ansible_user }}"
 ```
 </details>
 
