@@ -173,6 +173,47 @@ resource "yandex_compute_instance" "zabbix-server" {
   name        = "zabbix-server"
   hostname    = "zabbix-server"
   platform_id = "standard-v3"
+  zone        = "ru-central1-b"
+
+  resources {
+    cores         = 4
+    memory        = 4
+    core_fraction = 20
+  }
+  
+  scheduling_policy {
+    preemptible = true
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id = "fd8s4a9mnca2bmgol2r8" # image_id = "fd8rpsoinvpbjub1fn9g"   # 
+      size     = 20
+      type     = "network-hdd"
+    }
+  }
+
+  network_interface {    
+    subnet_id          = yandex_vpc_subnet.web-sub-b.id     
+    security_group_ids = [ yandex_vpc_security_group.zabbix-sg.id, yandex_vpc_security_group.sg-internet.id]  
+    
+  }
+  
+  metadata = {
+    user-data = "${file("./metadata/meta_web.yml")}"
+  }
+}
+
+output "zabbix_ip_address" {
+  value = yandex_compute_instance.zabbix-server.network_interface.0.ip_address
+}
+
+
+#zabbix_web_server
+resource "yandex_compute_instance" "zabbix-web" {
+  name        = "zabbix-web"
+  hostname    = "zabbix-web"
+  platform_id = "standard-v3"
   zone        = "ru-central1-a"
 
   resources {
@@ -204,9 +245,12 @@ resource "yandex_compute_instance" "zabbix-server" {
   }
 }
 
-output "zabbix_nat_ip_address" {
-  value = yandex_compute_instance.zabbix-server.network_interface.0.nat_ip_address
+output "zabbix_web_nat_ip_address" {
+  value = yandex_compute_instance.zabbix-web.network_interface.0.nat_ip_address
 }
+
+
+
 
 #network
 resource "yandex_vpc_network" "bastionet" {
@@ -633,7 +677,11 @@ resource "local_file" "tf_ansible_vars_file" {
     pg_cluster_id: ${yandex_mdb_postgresql_cluster.postgres.id}
     pg_admin_password: ${var.pg_admin_password}
     bastion_host: ${yandex_compute_instance.bastion.network_interface.0.nat_ip_address} 
-    zabbix_server_ip: ${yandex_compute_instance.zabbix-server.network_interface.0.nat_ip_address}
+    zabbix_server_ip: ${yandex_compute_instance.zabbix-server.network_interface.0.ip_address}
+    zabbix_web_ip_address: ${yandex_compute_instance.zabbix-web.network_interface.0.nat_ip_address}
     DOC
   filename = "../../ansible/group_vars/all.yml"
 }
+
+
+ 

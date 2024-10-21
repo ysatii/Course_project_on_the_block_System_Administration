@@ -1,0 +1,45 @@
+zabbix_user: zabbix
+zabbix_password: 12345678
+
+db_host_local: localhost
+db_port_local: 5432    
+db_name_local: "zabbix"
+db_user_local:  "zabbix"
+db_password_local: 12345678
+restore_file:   "zabbix.backup"
+restore_dir: "templates2"
+
+
+fk_constraints:
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_8;"
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_7;"
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_6;"
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_5;"
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_4;"
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_3;"
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_2;"
+      - "ALTER TABLE ONLY public.widget_field DROP CONSTRAINT IF EXISTS c_widget_field_1;"
+      - "ALTER TABLE ONLY public.widget DROP CONSTRAINT IF EXISTS c_widget_1;"
+      - "ALTER TABLE ONLY public.valuemap_mapping DROP CONSTRAINT IF EXISTS c_valuemap_mapping_1;"
+      - "ALTER TABLE ONLY public.valuemap DROP CONSTRAINT IF EXISTS c_valuemap_1;"
+      - "ALTER TABLE ONLY public.users_groups DROP CONSTRAINT IF EXISTS c_users_groups_2;"
+      - "ALTER TABLE ONLY public.users_groups DROP CONSTRAINT IF EXISTS c_users_groups_1;"
+      - "ALTER TABLE ONLY public.users DROP CONSTRAINT IF EXISTS c_users_1;"
+      - "ALTER TABLE ONLY public.triggers DROP CONSTRAINT IF EXISTS c_triggers_1;"
+      - "ALTER TABLE ONLY public.trigger_tag DROP CONSTRAINT IF EXISTS c_trigger_tag_1;"
+      - "ALTER TABLE ONLY public.trigger_discovery DROP CONSTRAINT IF EXISTS c_trigger_discovery_2;"
+      - "ALTER TABLE ONLY public.trigger_discovery DROP CONSTRAINT IF EXISTS c_trigger_discovery_1;"
+      - "ALTER TABLE ONLY public.trigger_depends DROP CONSTRAINT IF EXISTS c_trigger_depends_2;"
+      - "ALTER TABLE ONLY public.trigger_depends DROP CONSTRAINT IF EXISTS c_trigger_depends_1;"
+      - "ALTER TABLE ONLY public.token DROP CONSTRAINT IF EXISTS c_token_2;"
+      - "ALTER TABLE ONLY public.token DROP CONSTRAINT IF EXISTS c_token_1;"
+      - "ALTER TABLE ONLY public.task_result DROP CONSTRAINT IF EXISTS c_task_result_1;"
+      - "ALTER TABLE ONLY public.task_remote_command_result DROP CONSTRAINT IF EXISTS c_task_remote_command_result_1;"
+      - "ALTER TABLE ONLY public.task_remote_command DROP CONSTRAINT IF EXISTS c_task_remote_command_1;"
+      - "ALTER TABLE ONLY public.task_data DROP CONSTRAINT IF EXISTS c_task_data_1;"
+      - "ALTER TABLE ONLY public.task_close_problem DROP CONSTRAINT IF EXISTS c_task_close_problem_1;"
+      - "ALTER TABLE ONLY public.task_check_now DROP CONSTRAINT IF EXISTS c_task_check_now_1;"
+
+backup_f:   "zabbix.backup" 
+
+

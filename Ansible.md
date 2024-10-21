@@ -11,6 +11,8 @@
   * 5_pgsql_zabbix.yml - установка zabbix с использованием облачной PGSQL
   * 6_backup_pg_sql_local.yml - Бекапирование базы данных zabbix  
   * 7_restore_pg_sql_local.yml - востановление базы данных zabbix  
+  * requirements.yml - файл уставливает нужные для работы коллекции community.postgresql collection, показываем 
+  что можем работать не только с встроенными функциями но и расширить функционал за счет коллекций ansible
 
 ## пример запуска ansible-playbook из папки ansible
 
@@ -803,6 +805,24 @@ ansible-playbook 1_elk.yml
     become_user: "{{ ansible_user }}"
 ```
 </details>
+
+
+## requirements.yml - файл уставливает нужные для работы коллекции community.postgresql collection 
+## необходимо для play-book 10_zabbix_web.yml и ряду других стриптов, если у Вас нет коллекий запустите этот файл для установки коллекций
+ https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_db_module.html#ansible-collections-community-postgresql-postgresql-db-module
+<detail>
+<summary>Нажмите для просмотра листинга скрипта</summary>
+
+```
+collections:
+  # Установите коллекцию из Ansible Galaxy.
+  - name:  community.postgresql collection 
+    version: 3.5.0
+    source: https://galaxy.ansible.com
+```
+</details>
+
+
 
 * [Файл инвентаризации](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/ansible/inventory.ini)
  Файл ansible/inventory.ini  Содержит необходимые настройки 

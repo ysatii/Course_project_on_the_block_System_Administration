@@ -1,5 +1,5 @@
 ---
-- name: Востновление дампа базы данных
+- name: Восстановление дампа базы данных
   hosts: zabbix_server
   become: yes
   vars:

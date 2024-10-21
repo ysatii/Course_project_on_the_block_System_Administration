@@ -74,13 +74,13 @@
     loop: "{{ tables.query_result | map(attribute='tablename') | list }}"
     when: tables.query_result | length > 0
 
-  #- name: Пересоздаем базу данных
-  #  postgresql_db:
-  #      db: "{{ db_name_cloud }}"
-  #      login_user: "{{ db_user_cloud }}"
-  #      login_password: "{{ db_password_cloud }}"
-  #      login_host: "{{db_host_cloud}}"
-  #      login_port: "{{ db_port_cloud }}"
+ # - name: Пересоздаем базу данных
+ #   postgresql_db:
+ #       db: "{{ db_name_cloud }}"
+ #       login_user: "{{ db_user_cloud }}"
+ #       login_password: "{{ db_password_cloud }}"
+ #       login_host: "{{db_host_cloud}}"
+ #       login_port: "{{ db_port_cloud }}"
 
 
   - name: Копирование файла zabbix.backup с дампом pgsql 
@@ -94,7 +94,7 @@
   # дополнительные опции --clean --if-exists они удалят востанавливаемые объекты
   - name: Restore PostgreSQL database from dump
     command: >
-        pg_restore -h "{{ db_host_cloud }}" -p "{{ db_port_cloud }}" --clean --if-exists -U "{{ db_user_cloud }}" -d "{{ db_name_cloud }}" -v /tmp/zabbix.backup
+        pg_restore -h "{{ db_host_cloud }}" -p "{{ db_port_cloud }}" -U "{{ db_user_cloud }}" -d "{{ db_name_cloud }}" -v /tmp/zabbix.backup
     environment:
         PGPASSWORD: "{{ db_password_cloud }}"
     register: restore_result

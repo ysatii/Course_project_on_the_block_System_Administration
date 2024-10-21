@@ -102,7 +102,7 @@
         echo -n > /etc/zabbix/web/zabbix.conf.php
 
 
-  - name: Генеририуем соержимое йайла настроек web интерфейса /etc/zabbix/web/zabbix.conf.php
+  - name: Генеририуем соержимое файла настроек web интерфейса /etc/zabbix/web/zabbix.conf.php
     become: yes
     blockinfile:
        path: /etc/zabbix/web/zabbix.conf.php
