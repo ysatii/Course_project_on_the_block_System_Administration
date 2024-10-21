@@ -467,9 +467,13 @@ ansible-playbook 1_elk.yml
 * [Файл инвентаризации](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/ansible/inventory.ini)
  Файл ansible/inventory.ini  Содержит необходимые настройки 
 
-секция all:vars  
-bastion_host= указать адрес машины бастион  
-zabbix_server_ip= указать адрес машины с забикс сервером  
+секция  
+[all:vars]
+# bastion_host=84.201.159.142
+# zabbix_server_ip=89.169.147.200
+# эти значения берем из файла /ansible/group_vars/all.yml его создаст terraform!
 
-секция bastion  
-51.250.70.234 - изменить на адрес машины бастион 
+Каждый раз при запуске ansible-playbook адреса bastion_host и zabbix_server берем из файла /ansible/group_vars/all.yml
+
+
+
