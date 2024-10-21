@@ -8,8 +8,9 @@
   * 2_web.yml - Скрипт установливает скрпиты на WEB сервера
   * 3_conf_zabbix_copy.yml - установка пакета zabbix на машину zabbix-server
   * 4_zabbix_copy_all.yml - установка zabbix агента на все оставшиеся машины кроме zabbix сервер
+  * 6_backup_pg_sql_local.yml - Бекапирование базы zabbix 
 
-  
+
 ```sh
 ansible-playbook 1_elk.yml
 ```
