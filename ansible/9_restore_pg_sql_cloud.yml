@@ -1,40 +1,16 @@
 ---
-- name: Подготовка к востановлению дазы данных pgsql
-  hosts: zabbix_server 
-  gather_facts: no
-  vars:
-    state: present
-  tasks:
-        
-  - name: Устанавливаем пакеты необходимые для чистки таблиц 
-    ansible.builtin.debug:
-        msg: "Устанавливаем скрипты необходимы для чистки таблиц"
-  
-  - name: Установливаем python3-pip для последующей установки пакетов
-    apt:
-        name: python3-pip
-        state: present
-    become: yes
- 
-  - name: Установливаем зависимости psycopg2  
-    apt:
-      name: python3-psycopg2
-      state: present
-    become: yes
-
-  - name: Устанавливаем psycopg2 с помощью pip
-    pip:
-      name:
-        - psycopg2
-        - psycopg2-binary
-      state: present
-    become: yes
-  
-  
-- name: Очищаем базу данных и подымаем дамп
+- name: Установка библиотеки psycopg2 для Python
   hosts: zabbix_server
-  gather_facts: no
-  become_user: postgress
+  tasks:
+    - name: Установить библиотеку psycopg2
+      apt:
+        name: python3-psycopg2
+        state: present
+      become: yes
+
+- name: Востановление базы данных с очисткой данных 
+  hosts: zabbix_server
+  become: yes
   vars:
     state: present
     db_host_cloud: c-{{ pg_cluster_id }}.rw.mdb.yandexcloud.net  
@@ -42,64 +18,117 @@
     db_name_cloud: "{{ db_name_local }}"
     db_user_cloud: "{{ db_user_local }}"
     db_password_cloud: "{{ db_password_local }}"
-
   tasks:
-  - name: Удаление внешних ключей с таблиц
-    become_user: "{{ db_user_cloud }}"
-    command: >
-        psql -h {{ db_host_cloud  }} -U {{ db_user_cloud }} -p "{{ db_port_cloud }}" -d {{ db_name_cloud }} -c "{{ item }}"
-    with_items: "{{ fk_constraints }}"
-    environment:
-      PGPASSWORD: "{{ db_password_cloud }}"
-    ignore_errors: yes  # Игнорируем ошибки, если ключ уже не существует
-
-  - name: Получаем список всех таблиц 
-    postgresql_query:
-        db: "{{ db_name_cloud }}"
-        login_user: "{{ db_user_cloud }}"
-        login_password: "{{ db_password_cloud }}"
-        login_host: "{{db_host_cloud}}"
-        login_port: "{{ db_port_cloud }}"
-        query: "SELECT tablename FROM pg_tables WHERE schemaname = 'public';"
-    register: tables
-
-  - name: Удаляем все таблицы
-    postgresql_query:
-        db: "{{ db_name_cloud }}"
-        login_user: "{{ db_user_cloud }}"
-        login_password: "{{ db_password_cloud }}"
-        login_host: "{{db_host_cloud}}"
-        login_port: "{{ db_port_cloud }}"
-        query: "DROP TABLE {{ item }} CASCADE;"
-    loop: "{{ tables.query_result | map(attribute='tablename') | list }}"
-    when: tables.query_result | length > 0
-
- # - name: Пересоздаем базу данных
- #   postgresql_db:
- #       db: "{{ db_name_cloud }}"
- #       login_user: "{{ db_user_cloud }}"
- #       login_password: "{{ db_password_cloud }}"
- #       login_host: "{{db_host_cloud}}"
- #       login_port: "{{ db_port_cloud }}"
-
-
-  - name: Копирование файла zabbix.backup с дампом pgsql 
-    copy:
-      src: "{{restore_dir}}/{{restore_file}}"
-      dest: /tmp/
-
   
 
+    - name: Копирование файла zabbix.backup с дампом pgsql 
+      copy:
+        src: "{{restore_dir}}/{{restore_file}}"
+        dest: /tmp/
 
-  # дополнительные опции --clean --if-exists они удалят востанавливаемые объекты
-  - name: Restore PostgreSQL database from dump
-    command: >
-        pg_restore -h "{{ db_host_cloud }}" -p "{{ db_port_cloud }}" -U "{{ db_user_cloud }}" -d "{{ db_name_cloud }}" -v /tmp/zabbix.backup
-    environment:
-        PGPASSWORD: "{{ db_password_cloud }}"
-    register: restore_result
+    - name: Установка и активация расширений uuid-ossp и xml2
+      postgresql_query:
+        db: "{{ db_name_cloud }}"
+        login_user: "{{ db_user_cloud }}"
+        login_password: "{{ db_password_cloud }}"
+        login_host: "{{ db_host_cloud }}"
+        login_port: "{{ db_port_cloud }}"
+        query: |
+          DO $$
+          BEGIN
+            -- Проверка и установка расширения uuid-ossp
+            IF NOT EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'uuid-ossp') THEN
+              CREATE EXTENSION "uuid-ossp";
+            END IF;
+
+            -- Проверка и установка расширения xml2
+            IF NOT EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'xml2') THEN
+              CREATE EXTENSION "xml2";
+            END IF;
+          END $$;
+      register: extensions_setup
+
+    - name: Удаление внешних ключей с таблиц
+      command: >
+            psql -h {{ db_host_cloud  }} -U {{ db_user_cloud }} -p "{{ db_port_cloud }}" -d {{ db_name_cloud }} -c "{{ item }}"
+      with_items: "{{ fk_constraints }}"
+      environment:
+          PGPASSWORD: "{{ db_password_cloud }}"
+      ignore_errors: yes  # Игнорируем ошибки, если ключ уже не существует
+
+    - name: Удаление всех внешних ключей
+      postgresql_query:
+        db: "{{ db_name_cloud }}"
+        login_user: "{{ db_user_cloud }}"
+        login_password: "{{ db_password_cloud }}"
+        login_host: "{{ db_host_cloud }}"
+        login_port: "{{ db_port_cloud }}"
+        query: |
+          DO $$ DECLARE
+              r RECORD;
+          BEGIN
+              FOR r IN (SELECT conname, conrelid::regclass FROM pg_constraint WHERE contype = 'f') LOOP
+                  EXECUTE 'ALTER TABLE ' || r.conrelid || ' DROP CONSTRAINT ' || r.conname;
+              END LOOP;
+          END $$;
+
+
+    - name: Получение списка таблиц в схеме public
+      postgresql_query:
+        db: "{{ db_name_cloud }}"
+        login_user: "{{ db_user_cloud }}"
+        login_password: "{{ db_password_cloud }}"
+        login_host: "{{ db_host_cloud }}"
+        login_port: "{{ db_port_cloud }}"
+        query: "SELECT tablename FROM pg_tables WHERE schemaname = 'public';"
+      register: tables_list
+      failed_when: tables_list.query_result is not defined
+
     
-  # если нужжен результат востановления базы данных раскоментируйте строки ниже
-  # - name: Печатаем результат востановления данных
-  #  debug:
-# #   var: restore_result	
+    - name: Проверка наличия таблиц
+      debug:
+        msg: "Список таблиц: {{ tables_list.query_result }}"
+      when: tables_list.query_result is defined
+
+    - name: Очистка данных из таблиц по одной с паузой 1 секунда, чтобы неблокировать поток выполнения
+      postgresql_query:
+        db: "{{ db_name_cloud }}"
+        login_user: "{{ db_user_cloud }}"
+        login_password: "{{ db_password_cloud }}"
+        login_host: "{{ db_host_cloud }}"
+        login_port: "{{ db_port_cloud }}"
+        query: "TRUNCATE TABLE {{ item.tablename }} CASCADE;"
+      loop: "{{ tables_list.query_result }}"
+      loop_control:
+        pause: 1  # Пауза 1 секунда между выполнением команд
+
+
+    - name: Временное отключение проверок внешних ключей
+      postgresql_query:
+        db: "{{ db_name_cloud }}"
+        login_user: "{{ db_user_cloud }}"
+        login_password: "{{ db_password_cloud }}"
+        login_host: "{{ db_host_cloud }}"
+        login_port: "{{ db_port_cloud }}"
+        query: "SET session_replication_role = replica;"
+
+
+    - name: Восстановление базы данных из дампа
+      command: >
+        pg_restore -h "{{ db_host_cloud }}" -p "{{ db_port_cloud }}" -U "{{ db_user_cloud }}" -d "{{ db_name_cloud }}" --data-only --disable-triggers --exit-on-error -v /tmp/zabbix.backup
+      environment:
+        PGPASSWORD: "{{ db_password_cloud }}"
+      register: restore_result
+
+
+
+    - name: Включение проверок внешних ключей обратно
+      postgresql_query:
+        db: "{{ db_name_cloud }}"
+        login_user: "{{ db_user_cloud }}"
+        login_password: "{{ db_password_cloud }}"
+        login_host: "{{ db_host_cloud }}"
+        login_port: "{{ db_port_cloud }}"
+        query: "SET session_replication_role = DEFAULT;"
+
+    

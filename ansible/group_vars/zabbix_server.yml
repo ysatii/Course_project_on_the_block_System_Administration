@@ -8,6 +8,9 @@ db_user_local:  "zabbix"
 db_password_local: 12345678
 restore_file:   "zabbix.backup"
 restore_dir: "templates2"
+backup_f:   "zabbix.backup" 
+
+
 
 
 fk_constraints:
@@ -40,6 +43,6 @@ fk_constraints:
       - "ALTER TABLE ONLY public.task_close_problem DROP CONSTRAINT IF EXISTS c_task_close_problem_1;"
       - "ALTER TABLE ONLY public.task_check_now DROP CONSTRAINT IF EXISTS c_task_check_now_1;"
 
-backup_f:   "zabbix.backup" 
+
 
 

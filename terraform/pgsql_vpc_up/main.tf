@@ -176,8 +176,8 @@ resource "yandex_compute_instance" "zabbix-server" {
   zone        = "ru-central1-b"
 
   resources {
-    cores         = 4
-    memory        = 4
+    cores         = 2
+    memory        = 2
     core_fraction = 20
   }
   
@@ -217,8 +217,8 @@ resource "yandex_compute_instance" "zabbix-web" {
   zone        = "ru-central1-a"
 
   resources {
-    cores         = 4
-    memory        = 4
+    cores         = 2
+    memory        = 2
     core_fraction = 20
   }
   
@@ -625,22 +625,26 @@ resource "yandex_mdb_postgresql_cluster" "postgres" {
     name = "cl1"
     assign_public_ip = false
   }
-
-  host {
-    zone      = "ru-central1-b"
-    subnet_id = yandex_vpc_subnet.web-sub-b.id
-    name = "cl2"
-    replication_source_name = "cl1"
-    assign_public_ip = false
-  }
-
-  #  host {
+  
+  # для создания второй ноды кластера раскоментируйте код ниже
+  # host {
   #  zone      = "ru-central1-b"
+  #  subnet_id = yandex_vpc_subnet.web-sub-b.id
+  #  name = "cl2"
+  #  replication_source_name = "cl1"
+  #  assign_public_ip = false
+  # }
+  # создание второй ноды кластера  
+
+  # для создания третьей ноды кластрера раскоментируйте код ниже
+  #  host {
+  #   zone      = "ru-central1-b"
   #  subnet_id = yandex_vpc_subnet.web-sub-b.id
   #  name = "cl3"
   #  replication_source_name = "cl1"
   #  assign_public_ip = false
-  #}
+  # }
+  ##### создание третьей ноды кластрера  
 }
 
 resource "yandex_mdb_postgresql_database" "zabbix" {
@@ -666,6 +670,7 @@ resource "yandex_mdb_postgresql_user" "zabbix" {
     default_transaction_isolation = "read committed"
     log_min_duration_statement    = 5000
   }
+  grants = [ "mdb_admin", "mdb_monitor", "mdb_replication" ]
 }
 
 output "postgresql_cluster_id" {
