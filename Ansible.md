@@ -815,7 +815,6 @@ ansible-playbook 1_elk.yml
  
 <detail>
 <summary>Нажмите для просмотра листинга скрипта requirements.yml</summary>
-
 ```
 collections:
   # Установите коллекцию из Ansible Galaxy.
