@@ -1,17 +1,17 @@
 # Курсовой проект по блоку "Системное администрирование"
 
-## Скрипты ansible
+## pipeline ansible
 
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)
 
-  * 1_elk.yml - Скрипт дя установки стэка ELK  
-  * 2_web.yml - Скрипт установливает скрпиты на WEB сервера  
-  * 3_conf_zabbix_copy.yml - установка пакета zabbix на машину zabbix-server  
-  * 4_zabbix_copy_all.yml - установка zabbix агента на все оставшиеся машины кроме zabbix сервер  
-  * 5_pgsql_zabbix.yml - установка zabbix с использованием облачной PGSQL
-  * 6_backup_pg_sql_local.yml - Бекапирование базы данных zabbix  
-  * 7_restore_pg_sql_local.yml - востановление базы данных zabbix  
-  * requirements.yml - файл уставливает нужные для работы коллекции community.postgresql collection, показываем 
+  * 1_elk.yml - pipeline дя установки стэка ELK  
+  * 2_web.yml - pipeline установливает скрпиты на WEB сервера  
+  * 3_conf_zabbix_copy.yml - pipeline для установки пакета zabbix на машину zabbix-server  
+  * 4_zabbix_copy_all.yml - pipeline установка zabbix агента на все оставшиеся машины кроме zabbix сервер  
+  * 5_pgsql_zabbix.yml - уpipeline становка zabbix с использованием облачной PGSQL
+  * 6_backup_pg_sql_local.yml - pipeline бекапирование базы данных zabbix  
+  * 7_restore_pg_sql_local.yml - pipeline востановление базы данных zabbix  
+  * requirements.yml - pipeline уставливает нужные для работы коллекции community.postgresql collection, показываем 
   что можем работать не только с встроенными функциями но и расширить функционал за счет коллекций ansible
 
 ## пример запуска ansible-playbook из папки ansible
@@ -21,7 +21,7 @@ ansible-playbook 1_elk.yml
 ```
 
 
-## 1_elk.yml - плайбук дя установки стэка ELK
+## 1_elk.yml - pipeline дя установки стэка ELK
 <details>
 <summary>Нажмите для просмотра листинга 1_elk.yml</summary>
 
@@ -93,7 +93,7 @@ ansible-playbook 1_elk.yml
 Скрипт  скопирует утановит и настроет elasticsearch, kibana на elastic.ru-central1.internal и kibana-server.ru-central1.internal соостветственно!
 
 
-## 2_web.yml - плайбук установливает П.О. на WEB сервера
+## 2_web.yml - pipeline установливает П.О. на WEB сервера
  
 <details>
 <summary>Нажмите для просмотра листинга 2_web.yml</summary>
@@ -218,7 +218,7 @@ ansible-playbook 1_elk.yml
 на второй веб серве будет загружен скрипт, что позвлит понимать с какого из веб серверов идет ответ!
 
 
-## 3_conf_zabbix_copy.yml - плайбук для установки пакета zabbix на машину zabbix-server
+## 3_conf_zabbix_copy.yml - pipeline для установки пакета zabbix на машину zabbix-server
  
 <details>
 <summary>Нажмите для просмотра листинга 3_conf_zabbix_copy.yml</summary>
@@ -414,7 +414,7 @@ ansible-playbook 1_elk.yml
  установит zabbix агент на веб сервера
 
 
-## 4_zabbix_copy_all.yml - плайбук для установки zabbix агента на все оставшиеся машины кроме zabbix сервер
+## 4_zabbix_copy_all.yml - pipeline для установки zabbix агента на все оставшиеся машины кроме zabbix сервер
  
 <details>
 <summary>Нажмите для просмотра листинга 4_zabbix_copy_all.yml</summary>
@@ -468,7 +468,7 @@ ansible-playbook 1_elk.yml
 ```
 </details>
 
-## 5_pgsql_zabbix.yml - плайбук для установки zabbix с использованием облачной PGSQL 
+## 5_pgsql_zabbix.yml - pipeline для установки zabbix с использованием облачной PGSQL 
  
 <details>
 <summary>Нажмите для просмотра листинга 5_pgsql_zabbix.yml</summary>
@@ -680,7 +680,7 @@ ansible-playbook 1_elk.yml
 ```
 </details>
 
-## 6_backup_pg_sql_local.yml - плайбук для Бэкапирование базы данных zabbix
+## 6_backup_pg_sql_local.yml - pipeline для Бэкапирование базы данных zabbix
 позволяет сохранить наработки при уничтожении облака
  
 <details>
@@ -751,7 +751,7 @@ ansible-playbook 1_elk.yml
 ```
 </details>
 
-## 7_restore_pg_sql_local.yml - плайбук для востановление базы данных zabbix 
+## 7_restore_pg_sql_local.yml - pipeline для востановление базы данных zabbix 
  
 <details>
 <summary>Нажмите для просмотра листинга 7_restore_pg_sql_local.yml </summary>
@@ -819,13 +819,29 @@ ansible-playbook 1_elk.yml
 
 Файл ansible/inventory.ini  Содержит иформацию необхадимую для работы ansble 
 
-секция  
-[all:vars]
-/# bastion_host=84.201.159.142  
-/# zabbix_server_ip=89.169.147.200  
-/# эти значения берем из файла /ansible/group_vars/all.yml **его создаст terraform!**
+секция  [all:vars]
 
 Каждый раз при запуске ansible-playbook адреса bastion_host и zabbix_server берем из файла /ansible/group_vars/all.yml
+ssh_common_args='-o ProxyCommand="ssh -i /home/lamer/.ssh/test -W %h:%p test@{{ bastion_host }}"'   - полдлючение через ssh прокси
+
+
+секция [kibana]
+kibana-server.ru-central1.internal  -  доменное имя сервера kibana
+
+секция  [kibana:vars]
+ansible_ssh_common_args={{ ssh_common_args }}             -  аргументы ssh
+ansible_ssh_user={{ user }}                               -  пользоатель 
+ansible_ssh_private_key_file={{ private_key_file }}       -  приватный ключ
+pkg_name={{ pkg_kibana }}                                 -  имя пакета 
+
+
+секция [all-servers]                                      -  список всех доменных машин облака  
+elastic.ru-central1.internal
+kibana-server.ru-central1.internal
+bastion.ru-central1.internal
+webserver1.ru-central1.internal
+webserver2.ru-central1.internal
+zabbix-web.ru-central1.internal
 
 
 
