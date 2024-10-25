@@ -25,8 +25,8 @@
 ![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_13.jpg)
 
 ### Мониторинг сервиса nginx  
-https://mhost.by/knowledgebase/204/monitoring-nginx-s-pomoshchiu-zabbix.html?ysclid=m19lwfsgj1832761257 
-Статья описывает что нужно сделать что бы корректно получать данные в качестве примера на машине webserver1.ru-central1.internal  
+Статья https://mhost.by/knowledgebase/204/monitoring-nginx-s-pomoshchiu-zabbix.html?ysclid=m19lwfsgj1832761257 
+описывает что нужно сделать что бы корректно получать данные в качестве примера на машине webserver1.ru-central1.internal  
 создадим файл  /etc/nginx/conf.d/stub_status.conf с содеримым   
 
 ```
