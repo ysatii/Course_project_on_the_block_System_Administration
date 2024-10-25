@@ -812,18 +812,7 @@ ansible-playbook 1_elk.yml
   -  за счет использования  коллекций мы можем существенно расширить функционал ansible
   - если у Вас нет коллекий **postgresql collection** запустите этот файл для установки коллекций   https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_db_module.html#ansible-collections-community-postgresql-postgresql-db-module  
  
-## Листинг скрипта requirements.yml
 
-<detail>
-<summary>Нажмите для просмотра листинга  requirements.yml</summary>
-
-```
-collections:
-  - name:  community.postgresql collection 
-    version: 3.5.0
-    source: https://galaxy.ansible.com
-```
-</details>
 
 ## Файл инвентаризации
  [Файл инвентаризации](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/ansible/inventory.ini)  
