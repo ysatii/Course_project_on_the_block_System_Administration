@@ -1011,6 +1011,7 @@ terraform apply --auto-approve
 
 ```
 </details>
+
 ## При необходимости можно запровести востановление или бэкапирование БД севриса мониторинга zabbix
 * 9_restore_pg_sql_cloud.yml – поднять файл с бэкапом при использовании облачной БД pgsql Яндекс облака 
   <details>
@@ -1154,6 +1155,7 @@ terraform apply --auto-approve
 
 ```
 </details>
+
 * 8_backup_pg_sql_cloud.yml – создать бэкап при использовании облачной БД pgsql Яндекс облака 
   <details>
 <summary>Нажмите для просмотра листинга скрипта</summary>
