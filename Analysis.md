@@ -2,7 +2,7 @@
 
 ## Анализ задания
 
-[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
+[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)
 
 Для успешного выполнения задачи, ее небодимо разбить на на этапы  
 1.	Запуск необходимого количества виртуальных машин, балансиров, сетей с использованием terraform
@@ -26,7 +26,7 @@
  - Закрытый сегмент 1, web1, elasticsearch, 
  - Закрытый сегмент 2, web2
  
- ![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/shema.jpg)
+ ![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/shema.jpg)
 
 3. Создание security group, для пропуска нужного трафика
  - web, принимаем трафик 80 порт, трафик 22 от bastion
@@ -60,4 +60,4 @@
  -  БД  PGSQL, можно поднять на одной машине с  zabbix, либо использовать кластерную версию на яндекс облаке. 
 
 
-[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
+[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)

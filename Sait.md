@@ -1,6 +1,6 @@
 # Курсовой проект по блоку "Системное администрирование"
 
-[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
+[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)
 ## Сайт 
 
 
@@ -137,7 +137,7 @@ resource "yandex_alb_load_balancer" "lb1" {
 </details>
 
 ### Схема балансировки
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1.jpg)  
 
 
 ### Код Ansible
@@ -201,7 +201,7 @@ resource "yandex_alb_load_balancer" "lb1" {
 На каждый сервер загружаем свою версию файла, что бы понять работае ли  балансировка! Сделано в учебных целях.! 
 
 ### Запустим Ansible скрипт 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_3.jpg)
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_3.jpg)
 
 
 
@@ -209,10 +209,10 @@ resource "yandex_alb_load_balancer" "lb1" {
 ### Протестируем сайт 
 Получили ответы с обеих веб серверов   
 Сервер1  
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_2.jpg)
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_2.jpg)
 
 Сервер2  
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_1.jpg)
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_1.jpg)
 
 
 
@@ -220,31 +220,31 @@ resource "yandex_alb_load_balancer" "lb1" {
 
 ## Инфраструктура
 ### Балансировщик  
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_4.jpg)
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_4.jpg)
 
 
 ### Роутер
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_5.jpg)
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_5.jpg)
 
 ### Группы бэкендов
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_6.jpg)
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_6.jpg)
 
 ### Целевые группы
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_7.jpg)
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_7.jpg)
 
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_8.jpg)
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_8.jpg)
 
 ### Проверка состояния 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_9.jpg)
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_9.jpg)
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_10.jpg)
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_10.jpg)
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_11.jpg)
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_11.jpg)
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_12.jpg)
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_12.jpg)
 
 ### Виртуальные машины
-* [Инфраструктура](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Infrastructure.md)
+* [Инфраструктура](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/Infrastructure.md)
 
- [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
+ [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)

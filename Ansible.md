@@ -2,7 +2,7 @@
 
 ## Скрипты ansible
 
-[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
+[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)
 
   * 1_elk.yml - Скрипт дя установки стэка ELK  
   * 2_web.yml - Скрипт установливает скрпиты на WEB сервера  
@@ -827,7 +827,7 @@ collections:
 
 
 
-* [Файл инвентаризации](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/ansible/inventory.ini)
+* [Файл инвентаризации](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/ansible/inventory.ini)
  Файл ansible/inventory.ini  Содержит необходимые настройки 
 
 секция  

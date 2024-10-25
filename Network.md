@@ -1,7 +1,7 @@
 # Курсовой проект по блоку "Системное администрирование"
 
 ## Сеть
-[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
+[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)
 
 
 
@@ -46,23 +46,23 @@ resource "yandex_vpc_subnet" "external" {
 </details>
 
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net1.jpg)  
 
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1_1.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net1_1.jpg)  
 
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1_2.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net1_2.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1_3.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net1_3.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1_4.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net1_4.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1_5.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net1_5.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1_6.jpg) 
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net1_6.jpg) 
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net1_7.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net1_7.jpg)  
 
 
 ## Создадим таблицу маршрутизации и группы безопастности
@@ -251,23 +251,23 @@ resource "yandex_vpc_security_group" "zabbix-sg" {
 
 </details>
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net2.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net2.jpg)  
 
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net2_1.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net2_1.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net2_2.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net2_2.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net2_3.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net2_3.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net2_4.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net2_4.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net2_5.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net2_5.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net2_6.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net2_6.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net2_7.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net2_7.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net2_8.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net2_8.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/net2_9.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/net2_9.jpg)  

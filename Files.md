@@ -2,7 +2,7 @@
 
  
 ## Файловая структура проекта
-[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
+[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)
 
 * ansible - Папка содержит скрипты для автоматической установки П.О., установочные пакеты, файлы настроект, HTML страницы проекта  
   * files/packages/  - Папка содержит пакеты *.deb для установки на сервера
@@ -38,4 +38,4 @@
 * zbx_export_hosts.yaml файл для   добавления хостов в zabbix
 
 
-[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
+[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)

@@ -2,27 +2,27 @@
 
  
 ## Мониторинг
-[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
+[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)
 
 ### Проверим установку Zabbix  
 
 
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_6.jpg)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_6.jpg)
 
 ### Добавим все машины в систему мониторинга  
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_7.jpg)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_7.jpg)
 
 ### Все агенты Zabbix в сети и передают данные
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_8.jpg)
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_9.jpg)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_8.jpg)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_9.jpg)
 
 ### Создадим свои дашборды Утилизация памяти, уилизация процессора
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_10.jpg)
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_11.jpg)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_10.jpg)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_11.jpg)
 
 ### Создаем дашборд утилизация диска
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_12.jpg)
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_13.jpg)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_12.jpg)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_13.jpg)
 
 ### Мониторинг сервиса nginx  
 https://mhost.by/knowledgebase/204/monitoring-nginx-s-pomoshchiu-zabbix.html?ysclid=m19lwfsgj1832761257 
@@ -82,18 +82,18 @@ systemctl status nginx
 Все эти действия в автоматическом режиме сделает скрипт /ansible/2_web.yml
 
 
-[файл для   добавления хостов в zabbix](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/zbx_export_hosts.yaml)
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_21.jpg)
+[файл для   добавления хостов в zabbix](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/zbx_export_hosts.yaml)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_21.jpg)
 
 Добавим новый сервер в систему мониторинга, установим шаблон "Nginx by Zabbix agent"
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_19.jpg)
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_20.jpg)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_19.jpg)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_20.jpg)
 
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_14.jpg)
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_15.jpg)
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_16.jpg)
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_17.jpg)
-![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/zabbix1_18.jpg)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_14.jpg)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_15.jpg)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_16.jpg)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_17.jpg)
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/zabbix1_18.jpg)
 
 ## Сохранение и востановление данных Zabbix
 ### Сохранеие данных 
@@ -106,4 +106,4 @@ systemctl status nginx
 Поднимаеться копия рабочей базы с наработками - это позволят сохранять результаты работы zabbix и не тереть их при уничтожении облака!
 
 
-[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
+[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)

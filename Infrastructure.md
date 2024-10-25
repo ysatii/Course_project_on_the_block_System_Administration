@@ -2,7 +2,7 @@
 
  ## Инфраструктура
 
-[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
+[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)
 
 ## Развертывание инфраструктуры:
 
@@ -23,7 +23,7 @@ terraform apply --auto-approve
 
 ## Установка П.О. на машины! подробнее по ссылке ниже  
 
-* [установка П.О.](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/Ansible.md)
+* [установка П.О.](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/Ansible.md)
 
 
 ## При необходимости можем подлючиться к любой машине через SSH прокси - машина bastion  
@@ -34,20 +34,20 @@ zabbix-server.ru-central1.internal - внутренное доменное им�
 
 
 ## Виртуальные машины  
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_13.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_13.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_14.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_14.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_15.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_15.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_16.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_16.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_17.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_17.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_18.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_18.jpg)  
 
-![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/img/sait1_1.jpg)  
+![Скриншот 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/sait1_1.jpg)  
 
 
 ## Проверка работы балансировщика после установки П.О.   
-[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/main/README.md)
+[Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)
