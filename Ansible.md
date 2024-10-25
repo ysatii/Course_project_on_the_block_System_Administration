@@ -819,34 +819,34 @@ ansible-playbook 1_elk.yml
 
 Файл ansible/inventory.ini  Содержит иформацию необхадимую для работы ansble 
 
-секция  [all:vars]
+секция  [all:vars]  
 
-Каждый раз при запуске ansible-playbook адреса bastion_host и zabbix_server берем из файла /ansible/group_vars/all.yml
-ssh_common_args='-o ProxyCommand="ssh -i /home/lamer/.ssh/test -W %h:%p test@{{ bastion_host }}"'   - полдлючение через ssh прокси
+Каждый раз при запуске ansible-playbook адреса bastion_host и zabbix_server берем из файла /ansible/group_vars/all.yml  
+ssh_common_args='-o ProxyCommand="ssh -i /home/lamer/.ssh/test -W %h:%p test@{{ bastion_host }}"'   - полдлючение через ssh прокси  
 
 
-секция [kibana]
-kibana-server.ru-central1.internal  -  доменное имя сервера kibana
+секция [kibana]  
+kibana-server.ru-central1.internal  -  доменное имя сервера kibana  
 
-секция  [kibana:vars]
-ansible_ssh_common_args={{ ssh_common_args }}             -  аргументы ssh
-ansible_ssh_user={{ user }}                               -  пользоатель 
-ansible_ssh_private_key_file={{ private_key_file }}       -  приватный ключ
-pkg_name={{ pkg_kibana }}                                 -  имя пакета 
+секция  [kibana:vars]  
+ansible_ssh_common_args={{ ssh_common_args }}             -  аргументы ssh  
+ansible_ssh_user={{ user }}                               -  пользоатель   
+ansible_ssh_private_key_file={{ private_key_file }}       -  приватный ключ  
+pkg_name={{ pkg_kibana }}                                 -  имя пакета   
 
 
 секция [all-servers]                                      -  список всех доменных машин облака  
-elastic.ru-central1.internal
-kibana-server.ru-central1.internal
-bastion.ru-central1.internal
-webserver1.ru-central1.internal
-webserver2.ru-central1.internal
-zabbix-web.ru-central1.internal
+elastic.ru-central1.internal  
+kibana-server.ru-central1.internal  
+bastion.ru-central1.internal  
+webserver1.ru-central1.internal  
+webserver2.ru-central1.internal  
+zabbix-web.ru-central1.internal  
 
 
-файл /ansible/group_vars/all.yml          - файл создаеться во время работы terraform
-pg_cluster_id: c9qmntrq6ddkm3jrr3jq       -  ид кластера pgsql яндекс облака
-pg_admin_password: 12345678               -  пароль для кластера
-bastion_host: 130.193.51.227              -  IP адрес машины бастион
-zabbix_server_ip: 10.0.2.11               -  IP внутренний zabbix сервера в кластере
-zabbix_web_ip_address: 130.193.48.136     -  IP внешний адрес web интерфейса zabbix
+файл /ansible/group_vars/all.yml          - файл создаеться во время работы terraform  
+pg_cluster_id: c9qmntrq6ddkm3jrr3jq       -  ид кластера pgsql яндекс облака  
+pg_admin_password: 12345678               -  пароль для кластера  
+bastion_host: 130.193.51.227              -  IP адрес машины бастион  
+zabbix_server_ip: 10.0.2.11               -  IP внутренний zabbix сервера в кластере  
+zabbix_web_ip_address: 130.193.48.136     -  IP внешний адрес web интерфейса zabbix  
