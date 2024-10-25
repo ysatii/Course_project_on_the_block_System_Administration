@@ -843,7 +843,8 @@ webserver1.ru-central1.internal
 webserver2.ru-central1.internal
 zabbix-web.ru-central1.internal
 
-файл /ansible/group_vars/all.yml 
+
+файл /ansible/group_vars/all.yml          - файл создаеться во время работы terraform
 pg_cluster_id: c9qmntrq6ddkm3jrr3jq       -  ид кластера pgsql яндекс облака
 pg_admin_password: 12345678               -  пароль для кластера
 bastion_host: 130.193.51.227              -  IP адрес машины бастион
