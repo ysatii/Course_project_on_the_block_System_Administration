@@ -12,3 +12,5 @@ server.sql.gz
 all.yml
 all.yml
 .terraform.tfstate.lock.info
+test
+test.pub
