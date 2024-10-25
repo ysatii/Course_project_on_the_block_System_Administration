@@ -724,7 +724,7 @@ terraform apply --auto-approve
 * 4_zabbix_agent_copy_all.yml - установка zabbix агента на все виртуальные машины кластера
 * 10_zabbix_server_ony.yml - установка серверной части сервиса мониторинга zabbix при использовании облачной БД pgsql Яндекс облака
  <details>
-  <summary>Нажмите для просмотра листинга скрипта</summary>
+  <summary>Нажмите для просмотра листинга скрипта 10_zabbix_server_ony.yml</summary>
 
 ```
 ---
@@ -838,7 +838,7 @@ terraform apply --auto-approve
 * 11_zabix_web_only.yml - установка web-части сервиса мониторинга zabbix при использовании облачной БД pgsql Яндекс облака 
 
 <details>
-<summary>Нажмите для просмотра листинга скрипта</summary>
+<summary>Нажмите для просмотра листинга скрипта 11_zabix_web_only.yml</summary>
 
 ```
 
@@ -1016,7 +1016,7 @@ terraform apply --auto-approve
 * 9_restore_pg_sql_cloud.yml – поднять файл с бэкапом при использовании облачной БД pgsql Яндекс облака 
 
 <details>
-<summary>Нажмите для просмотра листинга скрипта</summary>
+<summary>Нажмите для просмотра листинга скрипта 9_restore_pg_sql_cloud.yml</summary>
 
 ```
 ---
@@ -1160,7 +1160,7 @@ terraform apply --auto-approve
 * 8_backup_pg_sql_cloud.yml – создать бэкап при использовании облачной БД pgsql Яндекс облака  
 
 <details>
-<summary>Нажмите для просмотра листинга скрипта</summary>
+<summary>Нажмите для просмотра листинга скрипта 8_backup_pg_sql_cloud.yml</summary>
 
 ```
 ---
