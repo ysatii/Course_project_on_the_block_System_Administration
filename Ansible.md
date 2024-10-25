@@ -825,7 +825,7 @@ collections:
 </details>
 
 ## Файл инвентаризации
- [Файл инвентаризации](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/ansible/inventory.ini)
+ [Файл инвентаризации](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/ansible/inventory.ini)  
  Файл ansible/inventory.ini  Содержит необходимые настройки 
 
 секция  
