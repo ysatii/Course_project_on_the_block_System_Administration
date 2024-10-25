@@ -722,7 +722,6 @@ terraform apply --auto-approve
 * 2_web.yml - установка и настройка веб сервиса
 * 4_zabbix_agent_copy_all.yml - установка zabbix агента на все виртуальные машины кластера
 * 10_zabbix_server_ony.yml - установка серверной части сервиса мониторинга zabbix при использовании облачной БД pgsql Яндекс облака
-  <details>
 <summary>Нажмите для просмотра листинга скрипта</summary>
 
 ```
