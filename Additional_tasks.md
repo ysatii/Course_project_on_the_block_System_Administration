@@ -736,6 +736,24 @@ terraform apply --auto-approve
   # }
   ##### создание третьей ноды кластрера  
 ```
+![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/pgsql.jpg)
+
+![рис 2](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/pgsql_1.jpg)
+
+![рис 3](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/pgsql_2.jpg)
+
+![рис 4](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/pgsql_3.jpg)
+
+![рис 5](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/pgsql_4.jpg)
+
+![рис 6](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/pgsql_5.jpg)
+
+![рис 7](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/pgsql_6.jpg)
+
+![рис 8](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/pgsql_7.jpg)
+
+![рис 9](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/pgsql_7.jpg)
+
 
 ### Установка программного обеспечения
 * 1_elk.yml - установка стека 
