@@ -97,7 +97,7 @@ Cоздайте ВМ, разверните на ней Elasticsearch. Устан
 * [Мониторинг](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/Monitoring.md)
 * [Логи](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/Logs.md)
 * [Сеть](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/Network.md)
-* [Резервное копирование](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/infrastructure.md)
+* [Резервное копирование](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/Infrastructure.md)
 
 ## дополнительный задания 1 
 
