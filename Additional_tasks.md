@@ -710,6 +710,7 @@ resource "local_file" "tf_ansible_vars_file" {
 cd pgsql_vpc_up
 terraform init  
 terraform apply --auto-approve
+```
 
 Данный скрипт создат виртуальные машины и кластер облачной pgsql по умолчанию подымаеться одна нода - master, для убыстрения создания облака!
 что бы создать дполнительные ноды нужно раскоментировать кодя ля создания дополнительных нод! это убыстрит работу с облаком
@@ -722,7 +723,8 @@ terraform apply --auto-approve
 * 2_web.yml - установка и настройка веб сервиса
 * 4_zabbix_agent_copy_all.yml - установка zabbix агента на все виртуальные машины кластера
 * 10_zabbix_server_ony.yml - установка серверной части сервиса мониторинга zabbix при использовании облачной БД pgsql Яндекс облака
-<summary>Нажмите для просмотра листинга скрипта</summary>
+ <details>
+  <summary>Нажмите для просмотра листинга скрипта</summary>
 
 ```
 ---
@@ -832,7 +834,9 @@ terraform apply --auto-approve
 
 ```
 </details>
+
 * 11_zabix_web_only.yml - установка web-части сервиса мониторинга zabbix при использовании облачной БД pgsql Яндекс облака 
+
 <details>
 <summary>Нажмите для просмотра листинга скрипта</summary>
 
