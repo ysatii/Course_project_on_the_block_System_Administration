@@ -21,7 +21,7 @@ ansible-playbook 1_elk.yml
 ```
 
 
-## 1_elk.yml - Скрипт дя установки стэка ELK
+## 1_elk.yml - плайбук дя установки стэка ELK
 <details>
 <summary>Нажмите для просмотра листинга скрипта</summary>
 
@@ -93,7 +93,7 @@ ansible-playbook 1_elk.yml
 Скрипт  скопирует утановит и настроет elasticsearch, kibana на elastic.ru-central1.internal и kibana-server.ru-central1.internal соостветственно!
 
 
-## 2_web.yml - Скрипт установливает П.О. на WEB сервера
+## 2_web.yml - плайбук установливает П.О. на WEB сервера
  
 <details>
 <summary>Нажмите для просмотра листинга скрипта</summary>
@@ -218,7 +218,7 @@ ansible-playbook 1_elk.yml
 на второй веб серве будет загружен скрипт, что позвлит понимать с какого из веб серверов идет ответ!
 
 
-## 3_conf_zabbix_copy.yml - установка пакета zabbix на машину zabbix-server
+## 3_conf_zabbix_copy.yml - плайбук для установки пакета zabbix на машину zabbix-server
  
 <details>
 <summary>Нажмите для просмотра листинга скрипта</summary>
@@ -414,7 +414,7 @@ ansible-playbook 1_elk.yml
  установит zabbix агент на веб сервера
 
 
-## 4_zabbix_copy_all.yml - установка zabbix агента на все оставшиеся машины кроме zabbix сервер
+## 4_zabbix_copy_all.yml - плайбук для установки zabbix агента на все оставшиеся машины кроме zabbix сервер
  
 <details>
 <summary>Нажмите для просмотра листинга скрипта</summary>
@@ -468,7 +468,7 @@ ansible-playbook 1_elk.yml
 ```
 </details>
 
-## 5_pgsql_zabbix.yml - установка zabbix с использованием облачной PGSQL 
+## 5_pgsql_zabbix.yml - плайбук для установки zabbix с использованием облачной PGSQL 
  
 <details>
 <summary>Нажмите для просмотра листинга скрипта</summary>
@@ -680,7 +680,7 @@ ansible-playbook 1_elk.yml
 ```
 </details>
 
-## 6_backup_pg_sql_local.yml - Бэкапирование базы данных zabbix
+## 6_backup_pg_sql_local.yml - плайбук для Бэкапирование базы данных zabbix
 позволяет сохранить наработки при уничтожении облака
  
 <details>
@@ -751,7 +751,7 @@ ansible-playbook 1_elk.yml
 ```
 </details>
 
-## 7_restore_pg_sql_local.yml - Востановление базы данных zabbix 
+## 7_restore_pg_sql_local.yml - плайбук для востановление базы данных zabbix 
  
 <details>
 <summary>Нажмите для просмотра листинга скрипта</summary>
@@ -812,8 +812,9 @@ ansible-playbook 1_elk.yml
   * за счет использования  коллекций мы можем существенно расширить функционал ansible
   * если у Вас нет коллекий **postgresql collection** запустите этот файл для установки коллекций
  https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_db_module.html#ansible-collections-community-postgresql-postgresql-db-module
+ 
 <detail>
-<summary>Нажмите для просмотра листинга скрипта</summary>
+<summary>Нажмите для просмотра листинга скрипта requirements.yml</summary>
 
 ```
 collections:
