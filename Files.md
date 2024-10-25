@@ -4,19 +4,25 @@
 ## Файловая структура проекта
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)
 
-* |-ansible - Папка содержит скрипты для автоматической установки П.О., установочные пакеты, файлы настроект, HTML страницы проекта  
-  * |- files/packages/  - Папка содержит пакеты *.deb для установки на сервера
-    * |README.md - ссылка на установочные пакеты
+* ansible - Папка содержит скрипты для автоматической установки П.О., установочные пакеты, файлы настроект, HTML страницы проекта  
+  *  files/packages/  - Папка содержит пакеты *.deb для установки на сервера
+    * README.md - ссылка на установочные пакеты
   * group_vars - Групповые переменные ansible
   * templates - Папка содержит файлы настроек установленных пакетов
   * templates2 - Папка содержит Файл HTML для второго сервера если нужно проверить работу балансировщика явно!
-  * 1_elk.yml - скрпит дя установки стэка ELK
-  * 2_web.yml - Скрипт установливает скрпиты на WEB сервера
-  * 3_conf_zabbix_copy.yml - установка пакета zabbix на машину zabbix-server
-  * 4_zabbix_copy_all.yml - установка zabbix агента на все оставшиеся машины кроме машины bastion
-  * 5_zabbix_bastion.yml - установка zabbix агента на машину bastion 
-  * ansible/ansible.cfg
-  * ansible/inventory.ini
+  * 1_elk.yml - Пайплайн дя установки стэка ELK
+  * 2_web.yml - Пайплайн установливает скрпиты на WEB сервера
+  * 3_conf_zabbix_copy.yml - Пайплайн для установки пакета zabbix на машину zabbix-server
+  * 4_zabbix_copy_all.yml - Пайплайн для установки zabbix агента на все оставшиеся машины кроме машины bastion
+  * 5_zabbix_bastion.yml - Пайплайн для установки zabbix агента на машину bastion 
+  * 6_backup_pg_sql_local.yml - Пайплан для бэкапирования базы pgsql сервиса zabbix при установке на машину zabbix сервер
+  * 7_restore_pg_sql_local.yml - Пайплан для востановления базы pgsql сервиса zabbix при установке на машину zabbix сервер
+  * 8_backup_pg_sql_cloud.yml - Пайплан для бэкапирования базы pgsql сервиса zabbix, при использовании pgsql яндекс облака
+  * 9_restore_pg_sql_cloud.yml - Пайплан для востановления базы pgsql сервиса zabbix, при использовании pgsql яндекс облака
+  * 10_zabbix_server_ony.yml - Паплайн для установки серверной части сервиса zabbix, при использовании pgsql яндекс облака
+  * 11_zabix_web_only.yml - Паплайн для установки Web-части сервиса zabbix, при использовании pgsql яндекс облака
+    * ansible.cfg - файл настроек ansible 
+    * inventory.ini - файл инвенттаризации ansible
 * img - Папка содержит рисунки, смены, принт-скрины
 * terraform - Папка содержит скрипты терраформ
   * image_backup - папка содержит скрипты для бэкапировая виртуальных машин
