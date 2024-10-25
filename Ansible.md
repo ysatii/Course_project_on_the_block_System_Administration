@@ -816,6 +816,7 @@ ansible-playbook 1_elk.yml
 
 <detail>
 <summary>Нажмите для просмотра листинга скрипта requirements.yml</summary>
+
 ```
 collections:
   - name:  community.postgresql collection 
