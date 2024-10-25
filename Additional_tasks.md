@@ -754,7 +754,7 @@ terraform apply --auto-approve
 
 ![рис 9](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/pgsql_8.jpg)
 
-![рис 10](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/pgsql_9.jpg)
+
 
 ### Установка программного обеспечения
 * 1_elk.yml - установка стека 
