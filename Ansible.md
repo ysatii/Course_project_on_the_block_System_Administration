@@ -811,7 +811,7 @@ ansible-playbook 1_elk.yml
   * необходимо для play-book 10_zabbix_web.yml и ряду других стриптов! 
   * за счет использования  коллекций мы можем существенно расширить функционал ansible
   * если у Вас нет коллекий **postgresql collection** запустите этот файл для установки коллекций
- https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_db_module.html#ansible-collections-community-postgresql-postgresql-db-module
+ https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_db_module.html#ansible-collections-community-postgresql-postgresql-db-module  
  
 
 <detail>
