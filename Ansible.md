@@ -815,8 +815,9 @@ ansible-playbook 1_elk.yml
 
 
 ## Файл инвентаризации
- [Файл инвентаризации](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/ansible/inventory.ini)  
- Файл ansible/inventory.ini  Содержит необходимые настройки 
+(https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/ansible/inventory.ini)  
+
+Файл ansible/inventory.ini  Содержит иформацию необхадимую для работы ansble 
 
 секция  
 [all:vars]
