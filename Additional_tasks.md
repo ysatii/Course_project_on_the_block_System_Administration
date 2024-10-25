@@ -4,6 +4,9 @@
 
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)
 
+## Схема сети при использовании базы pgsql Яндекс облака, zabbix разделен между zabbix-сервер и zabbix-web
+ ![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/shema2.jpg)
+
 
 ## Порядок запуска пайплайн ansible и terraform для поднятие инфраструктуры подолнительного для задания 1
 

@@ -59,5 +59,7 @@
  -	Поднять дамп БД. Для автоматизации процесса можем заранее установить  zabbix, произвести необходимые настройки 
  -  БД  PGSQL, можно поднять на одной машине с  zabbix, либо использовать кластерную версию на яндекс облаке. 
 
+## Схема сети при использовании базы pgsql яндекс облака
+ ![рис 1](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/img/shema2.jpg)
 
 [Главная страница](https://github.com/ysatii/Course_project_on_the_block_System_Administration/blob/extended/README.md)
