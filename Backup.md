@@ -12,7 +12,7 @@
  
 ### Код код terrafom создания снимков дисков 
 <details>
-<summary>Нажмите сдесь что бы раскрыть блок</summary>
+<summary>Нажмите здесь что бы раскрыть блок</summary>
 
 ```
 resource "yandex_compute_snapshot" "webserver1" {
@@ -55,7 +55,7 @@ resource "yandex_compute_snapshot" "zabbix-server" {
 ## Создадим расписание  для создания снимков дисков
 ### Код  terrafom создания расписания снимков дисков 
 <details>
-<summary>Нажмите сдесь что бы раскрыть блок</summary>
+<summary>Нажмите здесь что бы раскрыть блок</summary>
 
 ```
 resource "yandex_compute_snapshot_schedule" "snapshot-auto" {

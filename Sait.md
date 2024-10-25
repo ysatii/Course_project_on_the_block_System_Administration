@@ -8,7 +8,7 @@
 ### Создадим два веб сервера
 ### Код для создания веб серверов
 <details>
-<summary>Нажмите сдесь что бы раскрыть блок</summary>
+<summary>Нажмите здесь что бы раскрыть блок</summary>
 
 ```
 resource "yandex_compute_instance" "webserver" {
@@ -43,7 +43,7 @@ resource "yandex_compute_instance" "webserver" {
 
 ### Код terraform
 <details>
-<summary>Нажмите сдесь что бы раскрыть блок</summary>
+<summary>Нажмите здесь что бы раскрыть блок</summary>
 
 ```
 #target group
@@ -142,7 +142,7 @@ resource "yandex_alb_load_balancer" "lb1" {
 
 ### Код Ansible
 <details>
-<summary>Нажмите сдесь что бы раскрыть блок</summary>
+<summary>Нажмите здесь что бы раскрыть блок</summary>
 
 ```
   name: Configure web server

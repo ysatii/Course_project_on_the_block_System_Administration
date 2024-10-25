@@ -16,15 +16,15 @@
   * templates - Папка содержит файлы настроек установленных пакетов
   * templates2 - Папка содержит файлы настроек служб дополнительных заданий и файлы резервных копий БД pgsql сервиса zabbix
     *  rezerv - Папка содержит бэкапы БД pgsql сервиса zabbix в формате zabbix_дата_время_dump.backup
-  * 1_elk.yml - Пайплайн дя установки стэка ELK
-  * 2_web.yml - Пайплайн установливает скрпиты на WEB сервера
-  * 3_conf_zabbix_copy.yml - Пайплайн для установки пакета zabbix на машину zabbix-server
-  * 4_zabbix_copy_all.yml - Пайплайн для установки zabbix агента на все оставшиеся машины кроме машины bastion
-  * 5_zabbix_bastion.yml - Пайплайн для установки zabbix агента на машину bastion 
-  * 6_backup_pg_sql_local.yml - Пайплан для бэкапирования базы pgsql сервиса zabbix при установке на машину zabbix сервер
-  * 7_restore_pg_sql_local.yml - Пайплан для востановления базы pgsql сервиса zabbix при установке на машину zabbix сервер
-  * 8_backup_pg_sql_cloud.yml - Пайплан для бэкапирования базы pgsql сервиса zabbix, при использовании pgsql яндекс облака
-  * 9_restore_pg_sql_cloud.yml - Пайплан для востановления базы pgsql сервиса zabbix, при использовании pgsql яндекс облака
+  * 1_elk.yml - Пpipeline дя установки стэка ELK
+  * 2_web.yml - Пpipeline установливает скрпиты на WEB сервера
+  * 3_conf_zabbix_copy.yml - Пpipeline для установки пакета zabbix на машину zabbix-server
+  * 4_zabbix_copy_all.yml - Пpipeline для установки zabbix агента на все оставшиеся машины кроме машины bastion
+  * 5_zabbix_bastion.yml - Пpipeline для установки zabbix агента на машину bastion 
+  * 6_backup_pg_sql_local.yml - pipeline для бэкапирования базы pgsql сервиса zabbix при установке на машину zabbix сервер
+  * 7_restore_pg_sql_local.yml - pipeline для востановления базы pgsql сервиса zabbix при установке на машину zabbix сервер
+  * 8_backup_pg_sql_cloud.yml - pipeline для бэкапирования базы pgsql сервиса zabbix, при использовании pgsql яндекс облака
+  * 9_restore_pg_sql_cloud.yml - pipeline для востановления базы pgsql сервиса zabbix, при использовании pgsql яндекс облака
   * 10_zabbix_server_ony.yml - Паплайн для установки серверной части сервиса zabbix, при использовании pgsql яндекс облака
   * 11_zabix_web_only.yml - Паплайн для установки Web-части сервиса zabbix, при использовании pgsql яндекс облака
     * ansible.cfg - файл настроек ansible 
