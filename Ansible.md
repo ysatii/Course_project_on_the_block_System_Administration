@@ -813,8 +813,9 @@ ansible-playbook 1_elk.yml
   - если у Вас нет коллекий **postgresql collection** запустите этот файл для установки коллекций   https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_db_module.html#ansible-collections-community-postgresql-postgresql-db-module  
  
 ## Листинг скрипта requirements.yml
+
 <detail>
-<summary>Нажмите для просмотра листинга скрипта requirements.yml</summary>
+<summary>Нажмите для просмотра листинга  requirements.yml</summary>
 
 ```
 collections:
