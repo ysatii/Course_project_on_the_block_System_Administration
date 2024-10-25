@@ -813,12 +813,11 @@ ansible-playbook 1_elk.yml
   * если у Вас нет коллекий **postgresql collection** запустите этот файл для установки коллекций
  https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_db_module.html#ansible-collections-community-postgresql-postgresql-db-module
  
- 
+
 <detail>
 <summary>Нажмите для просмотра листинга скрипта requirements.yml</summary>
 ```
 collections:
-  # Установите коллекцию из Ansible Galaxy.
   - name:  community.postgresql collection 
     version: 3.5.0
     source: https://galaxy.ansible.com
