@@ -23,7 +23,7 @@ ansible-playbook 1_elk.yml
 
 ## 1_elk.yml - плайбук дя установки стэка ELK
 <details>
-<summary>Нажмите для просмотра листинга скрипта</summary>
+<summary>Нажмите для просмотра листинга 1_elk.yml</summary>
 
 ```
 ---
@@ -96,7 +96,7 @@ ansible-playbook 1_elk.yml
 ## 2_web.yml - плайбук установливает П.О. на WEB сервера
  
 <details>
-<summary>Нажмите для просмотра листинга скрипта</summary>
+<summary>Нажмите для просмотра листинга 2_web.yml</summary>
 
 ```
 ---
@@ -221,7 +221,7 @@ ansible-playbook 1_elk.yml
 ## 3_conf_zabbix_copy.yml - плайбук для установки пакета zabbix на машину zabbix-server
  
 <details>
-<summary>Нажмите для просмотра листинга скрипта</summary>
+<summary>Нажмите для просмотра листинга 3_conf_zabbix_copy.yml</summary>
 
 ```
 - name: Установка и настройка zabbix 
@@ -417,7 +417,7 @@ ansible-playbook 1_elk.yml
 ## 4_zabbix_copy_all.yml - плайбук для установки zabbix агента на все оставшиеся машины кроме zabbix сервер
  
 <details>
-<summary>Нажмите для просмотра листинга скрипта</summary>
+<summary>Нажмите для просмотра листинга 4_zabbix_copy_all.yml</summary>
 
 ```
 - name: Установка Zabbix агента на сервера
@@ -471,7 +471,7 @@ ansible-playbook 1_elk.yml
 ## 5_pgsql_zabbix.yml - плайбук для установки zabbix с использованием облачной PGSQL 
  
 <details>
-<summary>Нажмите для просмотра листинга скрипта</summary>
+<summary>Нажмите для просмотра листинга 5_pgsql_zabbix.yml</summary>
 
 ```
  - name: Установка zabbix сервера с испольгованием pgsql кластера yandex cloud
@@ -684,7 +684,7 @@ ansible-playbook 1_elk.yml
 позволяет сохранить наработки при уничтожении облака
  
 <details>
-<summary>Нажмите для просмотра листинга скрипта</summary>
+<summary>Нажмите для просмотра листинга 6_backup_pg_sql_local.yml</summary>
 
 ```
 ---
@@ -754,7 +754,7 @@ ansible-playbook 1_elk.yml
 ## 7_restore_pg_sql_local.yml - плайбук для востановление базы данных zabbix 
  
 <details>
-<summary>Нажмите для просмотра листинга скрипта</summary>
+<summary>Нажмите для просмотра листинга 7_restore_pg_sql_local.yml </summary>
 
 ```
 ---
